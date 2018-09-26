@@ -113,7 +113,7 @@
     </selectKey>
     insert into wings_setting (gmt_create, gmt_modified, setting_name, 
       seting_value)
-    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{settingName,jdbcType=VARCHAR}, 
+    values (now(), now(), #{settingName,jdbcType=VARCHAR},
       #{setingValue,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sduonline.wings.model.Setting">

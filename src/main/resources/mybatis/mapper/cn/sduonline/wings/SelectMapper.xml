@@ -113,7 +113,7 @@
     </selectKey>
     insert into wings_select (gmt_create, gmt_modified, student_id, 
       course_id)
-    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{studentId,jdbcType=BIGINT}, 
+    values (now(), now(), #{studentId,jdbcType=BIGINT},
       #{courseId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.sduonline.wings.model.Select">

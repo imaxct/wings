@@ -128,7 +128,7 @@
       campus, major, poor_level, 
       sex, class_name, nation, 
       phone, email, qq)
-    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{studentNo,jdbcType=VARCHAR}, 
+    values (now(), now(), #{studentNo,jdbcType=VARCHAR},
       #{studentName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{academy,jdbcType=VARCHAR}, 
       #{campus,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{poorLevel,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 

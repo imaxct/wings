@@ -113,7 +113,7 @@
     </selectKey>
     insert into wings_admin (gmt_create, gmt_modified, username, 
       password)
-    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, 
+    values (now(), now(), #{username,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sduonline.wings.model.Admin">

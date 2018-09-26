@@ -146,7 +146,7 @@
       course_time, not_poor_num, total_num, 
       grade_limit, available_num, deadline, 
       course_location, course_desc)
-    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{courseName,jdbcType=VARCHAR}, 
+    values (now(), now(), #{courseName,jdbcType=VARCHAR},
       #{courseTime,jdbcType=VARCHAR}, #{notPoorNum,jdbcType=INTEGER}, #{totalNum,jdbcType=INTEGER}, 
       #{gradeLimit,jdbcType=VARCHAR}, #{availableNum,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, 
       #{courseLocation,jdbcType=VARCHAR}, #{courseDesc,jdbcType=LONGVARCHAR})

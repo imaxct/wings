@@ -1,0 +1,4 @@
+mybatis:
+  type-aliases-package: cn.sduonline.wings.model
+  type-handlers-package: cn.sduonline.dao.mapper
+  mapper-locations: classpath:mybatis/mapper/cn/sduonline/wings/*.xml
