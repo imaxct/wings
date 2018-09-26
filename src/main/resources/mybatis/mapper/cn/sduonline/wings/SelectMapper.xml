@@ -122,10 +122,10 @@
     </selectKey>
     insert into wings_select
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="gmtCreate != null">
+      <if test="1 == 1">
         gmt_create,
       </if>
-      <if test="gmtModified != null">
+      <if test="1 == 1">
         gmt_modified,
       </if>
       <if test="studentId != null">
@@ -136,11 +136,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        now(),
       </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        now(),
       </if>
       <if test="studentId != null">
         #{studentId,jdbcType=BIGINT},
@@ -162,11 +162,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        gmt_modified = now(),
       </if>
       <if test="record.studentId != null">
         student_id = #{record.studentId,jdbcType=BIGINT},
@@ -182,8 +179,7 @@
   <update id="updateByExample" parameterType="map">
     update wings_select
     set id = #{record.id,jdbcType=BIGINT},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      gmt_modified = now(),
       student_id = #{record.studentId,jdbcType=BIGINT},
       course_id = #{record.courseId,jdbcType=BIGINT}
     <if test="_parameter != null">
@@ -193,11 +189,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.sduonline.wings.model.Select">
     update wings_select
     <set>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        gmt_modified = now(),
       </if>
       <if test="studentId != null">
         student_id = #{studentId,jdbcType=BIGINT},
@@ -210,8 +203,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.sduonline.wings.model.Select">
     update wings_select
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    set gmt_modified = now(),
       student_id = #{studentId,jdbcType=BIGINT},
       course_id = #{courseId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

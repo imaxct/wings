@@ -157,10 +157,10 @@
     </selectKey>
     insert into wings_course
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="gmtCreate != null">
+      <if test="1 == 1">
         gmt_create,
       </if>
-      <if test="gmtModified != null">
+      <if test="1 == 1">
         gmt_modified,
       </if>
       <if test="courseName != null">
@@ -192,11 +192,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        now(),
       </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        now(),
       </if>
       <if test="courseName != null">
         #{courseName,jdbcType=VARCHAR},
@@ -239,11 +239,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        gmt_modified = now(),
       </if>
       <if test="record.courseName != null">
         course_name = #{record.courseName,jdbcType=VARCHAR},
@@ -280,8 +277,7 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update wings_course
     set id = #{record.id,jdbcType=BIGINT},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      gmt_modified = now(),
       course_name = #{record.courseName,jdbcType=VARCHAR},
       course_time = #{record.courseTime,jdbcType=VARCHAR},
       not_poor_num = #{record.notPoorNum,jdbcType=INTEGER},
@@ -298,8 +294,7 @@
   <update id="updateByExample" parameterType="map">
     update wings_course
     set id = #{record.id,jdbcType=BIGINT},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      gmt_modified = now(),
       course_name = #{record.courseName,jdbcType=VARCHAR},
       course_time = #{record.courseTime,jdbcType=VARCHAR},
       not_poor_num = #{record.notPoorNum,jdbcType=INTEGER},
@@ -315,11 +310,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.sduonline.wings.model.Course">
     update wings_course
     <set>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="1 == 1">
+        gmt_modified = now(),
       </if>
       <if test="courseName != null">
         course_name = #{courseName,jdbcType=VARCHAR},
@@ -353,8 +345,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.sduonline.wings.model.Course">
     update wings_course
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    set gmt_modified = now(),
       course_name = #{courseName,jdbcType=VARCHAR},
       course_time = #{courseTime,jdbcType=VARCHAR},
       not_poor_num = #{notPoorNum,jdbcType=INTEGER},
@@ -368,8 +359,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.sduonline.wings.model.Course">
     update wings_course
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    set gmt_modified = now(),
       course_name = #{courseName,jdbcType=VARCHAR},
       course_time = #{courseTime,jdbcType=VARCHAR},
       not_poor_num = #{notPoorNum,jdbcType=INTEGER},
