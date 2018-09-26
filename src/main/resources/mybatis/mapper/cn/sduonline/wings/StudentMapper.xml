@@ -104,7 +104,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from wings_student
     where id = #{id,jdbcType=BIGINT}
@@ -123,15 +123,15 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into wings_student (gmt_create, gmt_modified, student_no, 
-      student_name, id_no, academy, 
-      campus, major, poor_level, 
-      sex, class_name, nation, 
+    insert into wings_student (gmt_create, gmt_modified, student_no,
+      student_name, id_no, academy,
+      campus, major, poor_level,
+      sex, class_name, nation,
       phone, email, qq)
     values (now(), now(), #{studentNo,jdbcType=VARCHAR},
-      #{studentName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{academy,jdbcType=VARCHAR}, 
-      #{campus,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{poorLevel,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{studentName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{academy,jdbcType=VARCHAR},
+      #{campus,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{poorLevel,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR},
       #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sduonline.wings.model.Student">
@@ -380,4 +380,24 @@
       qq = #{qq,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into wings_student (gmt_create, gmt_modified, student_no,
+    student_name, id_no, academy,
+    campus, major, poor_level,
+    sex, class_name, nation,
+    phone, email, qq)
+    values
+      <foreach collection="list" index="i" item="t" separator=",">
+        (now(), now(), #{t.studentNo,jdbcType=VARCHAR},
+        #{t.studentName,jdbcType=VARCHAR}, #{t.idNo,jdbcType=VARCHAR}, #{t.academy,jdbcType=VARCHAR},
+        #{t.campus,jdbcType=VARCHAR}, #{t.major,jdbcType=VARCHAR}, #{t.poorLevel,jdbcType=VARCHAR},
+        #{t.sex,jdbcType=VARCHAR}, #{t.className,jdbcType=VARCHAR}, #{t.nation,jdbcType=VARCHAR},
+        #{t.phone,jdbcType=VARCHAR}, #{t.email,jdbcType=VARCHAR}, #{t.qq,jdbcType=VARCHAR})
+      </foreach>
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wings_student
+  </select>
 </mapper>

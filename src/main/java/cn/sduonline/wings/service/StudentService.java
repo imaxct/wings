@@ -1,6 +1,6 @@
 package cn.sduonline.wings.service;
 
-import cn.sduonline.wings.model.Student;
+import cn.sduonline.wings.model.Course;
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionVO;
 
@@ -20,14 +20,6 @@ public interface StudentService {
      */
     Result login(String username, String password);
 
-    /**
-     * 导入学生信息
-     *
-     * @param students
-     * @return
-     */
-    Result importStudent(List<Student> students);
-
 
     /**
      * 获取公告
@@ -42,4 +34,28 @@ public interface StudentService {
      * @return
      */
     Result<List<SelectionVO>> getSelectedCourse(Long studentId);
+
+    /**
+     * 选课
+     *
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    Result selectCourse(Long studentId, Long courseId);
+
+    /**
+     * 退选
+     *
+     * @return
+     */
+    Result deselectCourse(Long studentId, Long courseId);
+
+
+    /**
+     * 获取课程列表
+     *
+     * @return
+     */
+    Result<List<Course>> getCourseList();
 }

@@ -1,4 +1,17 @@
 mybatis:
-  type-aliases-package: cn.sduonline.wings.model
-  type-handlers-package: cn.sduonline.dao.mapper
   mapper-locations: classpath:mybatis/mapper/cn/sduonline/wings/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: cn.sduonline.wings.model
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: million
+    url: jdbc:mysql://localhost:3306/student?useUnicode=true&character_set_server=utf8mb4
+
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  offset-as-page-num: true

@@ -1,5 +1,7 @@
 package cn.sduonline.wings.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +29,7 @@ public class Admin implements Serializable {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     private static final long serialVersionUID = 1L;

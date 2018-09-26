@@ -2,7 +2,9 @@ package cn.sduonline.wings.dao.mapper;
 
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.model.StudentExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface StudentMapper {
@@ -27,4 +29,8 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+    int insertBatch(List<Student> students);
+
+    List<Student> selectAll();
 }
