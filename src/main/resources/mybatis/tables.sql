@@ -85,7 +85,7 @@ CREATE TABLE `wings_setting` (
   `gmt_create` datetime NOT NULL,
   `gmt_modified` datetime NOT NULL,
   `setting_name` varchar(64) DEFAULT NULL,
-  `seting_value` varchar(200) NOT NULL,
+  `setting_value` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `wings_setting_setting_name_uindex` (`setting_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设置';

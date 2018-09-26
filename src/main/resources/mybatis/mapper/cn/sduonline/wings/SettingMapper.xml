@@ -6,7 +6,7 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="setting_name" jdbcType="VARCHAR" property="settingName" />
-    <result column="seting_value" jdbcType="VARCHAR" property="setingValue" />
+    <result column="setting_value" jdbcType="VARCHAR" property="settingValue" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, setting_name, seting_value
+    id, gmt_create, gmt_modified, setting_name, setting_value
   </sql>
   <select id="selectByExample" parameterType="cn.sduonline.wings.model.SettingExample" resultMap="BaseResultMap">
     select
@@ -112,9 +112,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into wings_setting (gmt_create, gmt_modified, setting_name, 
-      seting_value)
+      setting_value)
     values (now(), now(), #{settingName,jdbcType=VARCHAR},
-      #{setingValue,jdbcType=VARCHAR})
+      #{settingValue,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sduonline.wings.model.Setting">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -131,8 +131,8 @@
       <if test="settingName != null">
         setting_name,
       </if>
-      <if test="setingValue != null">
-        seting_value,
+      <if test="settingValue != null">
+        setting_value,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -145,8 +145,8 @@
       <if test="settingName != null">
         #{settingName,jdbcType=VARCHAR},
       </if>
-      <if test="setingValue != null">
-        #{setingValue,jdbcType=VARCHAR},
+      <if test="settingValue != null">
+        #{settingValue,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -168,8 +168,8 @@
       <if test="record.settingName != null">
         setting_name = #{record.settingName,jdbcType=VARCHAR},
       </if>
-      <if test="record.setingValue != null">
-        seting_value = #{record.setingValue,jdbcType=VARCHAR},
+      <if test="record.settingValue != null">
+        setting_value = #{record.settingValue,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -181,7 +181,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       gmt_modified = now(),
       setting_name = #{record.settingName,jdbcType=VARCHAR},
-      seting_value = #{record.setingValue,jdbcType=VARCHAR}
+      setting_value = #{record.settingValue,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -195,8 +195,8 @@
       <if test="settingName != null">
         setting_name = #{settingName,jdbcType=VARCHAR},
       </if>
-      <if test="setingValue != null">
-        seting_value = #{setingValue,jdbcType=VARCHAR},
+      <if test="settingValue != null">
+        setting_value = #{settingValue,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -205,7 +205,7 @@
     update wings_setting
     set gmt_modified = now(),
       setting_name = #{settingName,jdbcType=VARCHAR},
-      seting_value = #{setingValue,jdbcType=VARCHAR}
+      setting_value = #{settingValue,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

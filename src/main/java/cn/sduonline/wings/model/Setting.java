@@ -15,7 +15,7 @@ public class Setting implements Serializable {
 
     private String settingName;
 
-    private String setingValue;
+    private String settingValue;
 
     private static final long serialVersionUID = 1L;
 
@@ -51,12 +51,12 @@ public class Setting implements Serializable {
         this.settingName = settingName;
     }
 
-    public String getSetingValue() {
-        return setingValue;
+    public String getSettingValue() {
+        return settingValue;
     }
 
-    public void setSetingValue(String setingValue) {
-        this.setingValue = setingValue;
+    public void setSettingValue(String settingValue) {
+        this.settingValue = settingValue;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Setting implements Serializable {
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
             && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
             && (this.getSettingName() == null ? other.getSettingName() == null : this.getSettingName().equals(other.getSettingName()))
-            && (this.getSetingValue() == null ? other.getSetingValue() == null : this.getSetingValue().equals(other.getSetingValue()));
+            && (this.getSettingValue() == null ? other.getSettingValue() == null : this.getSettingValue().equals(other.getSettingValue()));
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Setting implements Serializable {
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
         result = prime * result + ((getSettingName() == null) ? 0 : getSettingName().hashCode());
-        result = prime * result + ((getSetingValue() == null) ? 0 : getSetingValue().hashCode());
+        result = prime * result + ((getSettingValue() == null) ? 0 : getSettingValue().hashCode());
         return result;
     }
 
@@ -100,7 +100,7 @@ public class Setting implements Serializable {
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
         sb.append(", settingName=").append(settingName);
-        sb.append(", setingValue=").append(setingValue);
+        sb.append(", settingValue=").append(settingValue);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
