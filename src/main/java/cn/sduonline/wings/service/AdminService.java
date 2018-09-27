@@ -1,5 +1,6 @@
 package cn.sduonline.wings.service;
 
+import cn.sduonline.wings.model.Admin;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.vo.Result;
 
@@ -18,6 +19,12 @@ public interface AdminService {
      */
     Result login(String username, String password);
 
+    /**
+     * 通过用户名获取用户
+     * @param username
+     * @return
+     */
+    Admin getAdminByUsername(String username);
 
     /**
      * 登出

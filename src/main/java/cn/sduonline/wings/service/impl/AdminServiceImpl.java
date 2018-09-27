@@ -55,6 +55,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin getAdminByUsername(String username) {
+        AdminExample example = new AdminExample();
+        example.createCriteria().andUsernameEqualTo(username);
+        List<Admin> list = adminMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(list) || list.size() != 1) {
+            return null;
+        }
+        return list.get(0);
+    }
+
+    @Override
     public Result logout() {
         return null;
     }

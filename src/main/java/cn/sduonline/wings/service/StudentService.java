@@ -1,6 +1,7 @@
 package cn.sduonline.wings.service;
 
 import cn.sduonline.wings.model.Course;
+import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionVO;
 
@@ -20,7 +21,31 @@ public interface StudentService {
      */
     Result login(String username, String password);
 
+    /**
+     * 通过学号获取
+     *
+     * @param stuNo
+     * @return
+     */
+    Student getStudentByNo(String stuNo);
 
+
+    /**
+     * 爬教务获取
+     *
+     * @param stuNo
+     * @param password
+     * @return
+     */
+    Student getStudentByCrawler(String stuNo, String password);
+
+
+    /**
+     * 保存
+     * @param student
+     * @return
+     */
+    Student saveStudent(Student student);
     /**
      * 获取公告
      *
