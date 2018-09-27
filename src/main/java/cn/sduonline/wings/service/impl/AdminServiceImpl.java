@@ -10,7 +10,6 @@ import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.vo.Result;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -28,13 +27,10 @@ public class AdminServiceImpl implements AdminService {
 
     private final AdminMapper adminMapper;
 
-    private final SqlSession sqlSession;
-
     @Autowired
-    public AdminServiceImpl(StudentMapper studentMapper, AdminMapper adminMapper, SqlSession sqlSession) {
+    public AdminServiceImpl(StudentMapper studentMapper, AdminMapper adminMapper) {
         this.studentMapper = studentMapper;
         this.adminMapper = adminMapper;
-        this.sqlSession = sqlSession;
     }
 
     @Override
