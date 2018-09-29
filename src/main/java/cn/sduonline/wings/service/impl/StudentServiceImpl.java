@@ -1,8 +1,12 @@
 package cn.sduonline.wings.service.impl;
 
+import cn.sduonline.wings.dao.mapper.SelectMapper;
 import cn.sduonline.wings.dao.mapper.SettingMapper;
 import cn.sduonline.wings.dao.mapper.StudentMapper;
-import cn.sduonline.wings.model.*;
+import cn.sduonline.wings.model.Course;
+import cn.sduonline.wings.model.Select;
+import cn.sduonline.wings.model.Setting;
+import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.StudentService;
 import cn.sduonline.wings.util.SettingName;
 import cn.sduonline.wings.vo.Result;
@@ -20,11 +24,13 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final SettingMapper settingMapper;
+    private final SelectMapper selectMapper;
 
     @Autowired
-    public StudentServiceImpl(StudentMapper studentMapper, SettingMapper settingMapper) {
+    public StudentServiceImpl(StudentMapper studentMapper, SettingMapper settingMapper, SelectMapper selectMapper) {
         this.studentMapper = studentMapper;
         this.settingMapper = settingMapper;
+        this.selectMapper = selectMapper;
     }
 
     @Override
@@ -73,6 +79,7 @@ public class StudentServiceImpl implements StudentService {
     public Result<List<SelectionVO>> getSelectedCourse(Long studentId) {
         SelectExample example = new SelectExample();
         example.createCriteria().andStudentIdEqualTo(studentId);
+        List<Select> list = selectMapper.selectByExample(example);
         return null;
     }
 

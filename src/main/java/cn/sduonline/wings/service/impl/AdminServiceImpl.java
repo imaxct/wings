@@ -4,7 +4,6 @@ import cn.sduonline.wings.dao.mapper.AdminMapper;
 import cn.sduonline.wings.dao.mapper.StudentMapper;
 import cn.sduonline.wings.exception.ServiceException;
 import cn.sduonline.wings.model.Admin;
-import cn.sduonline.wings.model.AdminExample;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.vo.Result;
