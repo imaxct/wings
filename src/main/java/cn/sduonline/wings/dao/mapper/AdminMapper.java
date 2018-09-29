@@ -1,6 +1,9 @@
 package cn.sduonline.wings.dao.mapper;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Admin;
+import cn.sduonline.wings.model.condition.AdminCondition;
 
 public interface AdminMapper {
     /**
@@ -50,4 +53,6 @@ public interface AdminMapper {
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
     int updateByPrimaryKey(Admin record);
+
+	List<Admin> selectByCondition(AdminCondition condition);
 }

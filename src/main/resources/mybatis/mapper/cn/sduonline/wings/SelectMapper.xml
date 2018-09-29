@@ -13,6 +13,13 @@
     <result column="student_id" jdbcType="BIGINT" property="studentId" />
     <result column="course_id" jdbcType="BIGINT" property="courseId" />
   </resultMap>
+  <resultMap id="SelectionVO" type="cn.sduonline.wings.vo.SelectionVO">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+    <result column="course_id" jdbcType="BIGINT" property="courseId"/>
+    <result column="course_time" jdbcType="VARCHAR" property="courseTime"/>
+    <result column="course_location" jdbcType="VARCHAR" property="courseLocation"/>
+  </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
@@ -126,4 +133,49 @@
       course_id = #{courseId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByCondition" parameterType="cn.sduonline.wings.model.condition.SelectCondition"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from wings_select
+    <where>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="courseId != null">
+        and course_id = #{courseId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+  <select id="selectJoinCourse" parameterType="cn.sduonline.wings.model.condition.SelectCondition"
+          resultMap="SelectionVO">
+    select
+    s.id, s.gmt_create, s.gmt_modified, s.student_id, s.course_id,
+    c.course_name, c.course_time, c.course_location
+    from wings_select s
+    join wings_course c
+    on s.course_id = c.id
+    <where>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="courseId != null">
+        and course_id = #{courseId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+  <select id="countByCondition" parameterType="cn.sduonline.wings.model.condition.SelectCondition"
+          resultType="java.lang.Integer">
+    select
+    count(*)
+    from wings_select
+    <where>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="courseId != null">
+        and course_id = #{courseId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
 </mapper>

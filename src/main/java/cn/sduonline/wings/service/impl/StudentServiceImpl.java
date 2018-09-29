@@ -1,100 +1,159 @@
 package cn.sduonline.wings.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.CollectionUtils;
+
+import cn.sduonline.wings.dao.mapper.CourseMapper;
 import cn.sduonline.wings.dao.mapper.SelectMapper;
 import cn.sduonline.wings.dao.mapper.SettingMapper;
 import cn.sduonline.wings.dao.mapper.StudentMapper;
-import cn.sduonline.wings.model.Course;
-import cn.sduonline.wings.model.Select;
-import cn.sduonline.wings.model.Setting;
-import cn.sduonline.wings.model.Student;
+import cn.sduonline.wings.model.*;
+import cn.sduonline.wings.model.condition.SelectCondition;
+import cn.sduonline.wings.model.condition.SettingCondition;
+import cn.sduonline.wings.model.condition.StudentCondition;
 import cn.sduonline.wings.service.StudentService;
 import cn.sduonline.wings.util.SettingName;
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
 
 /**
  * Created by imaxct on 18-9-27.
  */
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final StudentMapper studentMapper;
-    private final SettingMapper settingMapper;
-    private final SelectMapper selectMapper;
+	private final StudentMapper studentMapper;
+	private final SettingMapper settingMapper;
+	private final SelectMapper selectMapper;
+	private final CourseMapper courseMapper;
 
-    @Autowired
-    public StudentServiceImpl(StudentMapper studentMapper, SettingMapper settingMapper, SelectMapper selectMapper) {
-        this.studentMapper = studentMapper;
-        this.settingMapper = settingMapper;
-        this.selectMapper = selectMapper;
-    }
+	private final TransactionTemplate transactionTemplate;
 
-    @Override
-    public Result login(String username, String password) {
-        return null;
-    }
+	@Autowired
+	public StudentServiceImpl(StudentMapper studentMapper, SettingMapper settingMapper, SelectMapper selectMapper,
+			CourseMapper courseMapper, TransactionTemplate transactionTemplate) {
+		this.studentMapper = studentMapper;
+		this.settingMapper = settingMapper;
+		this.selectMapper = selectMapper;
+		this.courseMapper = courseMapper;
+		this.transactionTemplate = transactionTemplate;
+	}
 
-    @Override
-    public Student getStudentByNo(String stuNo) {
-        StudentExample example = new StudentExample();
-        example.createCriteria().andStudentNoEqualTo(stuNo);
-        List<Student> list = studentMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(list) || list.size() != 1) {
-            return null;
-        }
-        return list.get(0);
-    }
+	@Override
+	public Result login(String username, String password) {
+		return null;
+	}
 
-    @Override
-    public Student getStudentByCrawler(String stuNo, String password) {
-        return null;
-    }
+	@Override
+	public Student getStudentByNo(String stuNo) {
+		StudentCondition condition = new StudentCondition();
+		condition.setStudentNo(stuNo);
+		List<Student> list = studentMapper.selectByCondition(condition);
+		if (CollectionUtils.isEmpty(list) || list.size() != 1) {
+			return null;
+		}
+		return list.get(0);
+	}
 
-    @Override
-    public Student saveStudent(Student student) {
-        studentMapper.insert(student);
-        return student;
-    }
+	@Override
+	public Student getStudentByCrawler(String stuNo, String password) {
+		return null;
+	}
 
-    @Override
-    public Result getAnnouncement() {
-        SettingExample example = new SettingExample();
-        example.createCriteria().andSettingNameEqualTo(SettingName.ANNOUNCEMENT);
-        List<Setting> list = settingMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(list) || list.size() != 1) {
-            Setting setting = new Setting();
-            setting.setSettingName(SettingName.ANNOUNCEMENT);
-            setting.setSettingValue("无公告");
-            settingMapper.insert(setting);
-            return Result.ok(setting);
-        }
-        return Result.ok(list.get(0));
-    }
+	@Override
+	public Student saveStudent(Student student) {
+		studentMapper.insert(student);
+		return student;
+	}
 
-    @Override
-    public Result<List<SelectionVO>> getSelectedCourse(Long studentId) {
-        SelectExample example = new SelectExample();
-        example.createCriteria().andStudentIdEqualTo(studentId);
-        List<Select> list = selectMapper.selectByExample(example);
-        return null;
-    }
+	@Override
+	public Result getAnnouncement() {
+		SettingCondition condition = new SettingCondition();
+		condition.setSettingName(SettingName.ANNOUNCEMENT);
+		List<Setting> list = settingMapper.selectByCondition(condition);
+		if (CollectionUtils.isEmpty(list) || list.size() != 1) {
+			Setting setting = new Setting();
+			setting.setSettingName(SettingName.ANNOUNCEMENT);
+			setting.setSettingValue("无公告");
+			settingMapper.insert(setting);
+			return Result.ok(setting);
+		}
+		return Result.ok(list.get(0));
+	}
 
-    @Override
-    public Result selectCourse(Long studentId, Long courseId) {
-        return null;
-    }
+	@Override
+	@SuppressWarnings("unchecked")
+	public Result<List<SelectionVO>> getSelectedCourse(Long studentId) {
+		SelectCondition condition = new SelectCondition();
+		condition.setStudentId(studentId);
+		List<SelectionVO> list = selectMapper.selectJoinCourse(condition);
+		return Result.ok(list);
+	}
 
-    @Override
-    public Result deselectCourse(Long studentId, Long courseId) {
-        return null;
-    }
+	@Override
+	public Result selectCourse(Long studentId, Long courseId) {
+		Student student = studentMapper.selectByPrimaryKey(studentId);
 
-    @Override
-    public Result<List<Course>> getCourseList() {
-        return null;
-    }
+		SettingCondition settingCondition = new SettingCondition();
+		settingCondition.setSettingName(SettingName.SELECT_LIMIT);
+		List<Setting> settings = settingMapper.selectByCondition(settingCondition);
+		if (!CollectionUtils.isEmpty(settings)) {
+			Setting setting = settings.get(0);
+			int selectLimit = Integer.parseInt(setting.getSettingValue());
+			SelectCondition selectCondition = new SelectCondition();
+			selectCondition.setStudentId(studentId);
+			int selected = selectMapper.countByCondition(selectCondition);
+			if (selected >= selectLimit) {
+				return Result.err("当前选课数量已经超过本期选课数量限制", null);
+			}
+		}
+
+		transactionTemplate.execute((t) -> {
+			try {
+				Course course = courseMapper.selectByPrimaryKeyForUpdate(courseId);
+
+				if (course.getAvailableNum() <= 0) {
+					return Result.err("课余量为0, 不能选择", null);
+				}
+
+				PoorLevelEnum poorLevel = PoorLevelEnum.valueOf(student.getPoorLevel());
+				if (poorLevel == PoorLevelEnum.NOT_POOR) {
+					if (course.getNotPoorNum() <= 0) {
+						return Result.err("非困难名额已满", null);
+					}
+				} else {
+					course.setNotPoorNum(course.getNotPoorNum() - 1);
+				}
+
+				course.setAvailableNum(course.getAvailableNum() - 1);
+
+				courseMapper.updateByPrimaryKeySelective(course);
+
+				Select select = new Select();
+				select.setCourseId(courseId);
+				select.setStudentId(studentId);
+
+				selectMapper.insert(select);
+
+				return Result.ok(null);
+			} catch (Exception e) {
+				t.setRollbackOnly();
+				return Result.err("选课失败, 重复选课或课余量不足", null);
+			}
+		});
+		return Result.err("选课失败", null);
+	}
+
+	@Override
+	public Result deselectCourse(Long studentId, Long courseId) {
+		return null;
+	}
+
+	@Override
+	public Result<List<Course>> getCourseList() {
+		return null;
+	}
 }

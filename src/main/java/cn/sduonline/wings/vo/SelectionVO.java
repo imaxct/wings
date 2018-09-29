@@ -1,9 +1,9 @@
 package cn.sduonline.wings.vo;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * 已选课程VO
@@ -11,6 +11,8 @@ import java.util.Date;
  */
 @Data
 public class SelectionVO implements Serializable {
+
+	private Long id;
 
     /**
      * 课程名称

@@ -1,6 +1,10 @@
 package cn.sduonline.wings.dao.mapper;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Select;
+import cn.sduonline.wings.model.condition.SelectCondition;
+import cn.sduonline.wings.vo.SelectionVO;
 
 public interface SelectMapper {
     /**
@@ -50,4 +54,10 @@ public interface SelectMapper {
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
     int updateByPrimaryKey(Select record);
+
+	List<Select> selectByCondition(SelectCondition condition);
+
+	List<SelectionVO> selectJoinCourse(SelectCondition condition);
+
+	int countByCondition(SelectCondition condition);
 }

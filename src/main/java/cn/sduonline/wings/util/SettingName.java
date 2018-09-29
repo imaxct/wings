@@ -4,5 +4,13 @@ package cn.sduonline.wings.util;
  * Created by imaxct on 18-9-27.
  */
 public class SettingName {
-    public static final String ANNOUNCEMENT = "announcement";
+
+	/**
+	 * 公告
+	 */
+	public static final String ANNOUNCEMENT = "ANNOUNCEMENT";
+	/**
+	 * 本期选课上限
+	 */
+	public static final String SELECT_LIMIT = "SELECT_LIMIT";
 }

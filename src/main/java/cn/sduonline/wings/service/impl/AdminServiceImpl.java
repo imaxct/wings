@@ -1,19 +1,22 @@
 package cn.sduonline.wings.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
 import cn.sduonline.wings.dao.mapper.AdminMapper;
 import cn.sduonline.wings.dao.mapper.StudentMapper;
 import cn.sduonline.wings.exception.ServiceException;
 import cn.sduonline.wings.model.Admin;
 import cn.sduonline.wings.model.Student;
+import cn.sduonline.wings.model.condition.AdminCondition;
 import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.vo.Result;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
 
 /**
  * @author imaxct
@@ -34,9 +37,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result login(String username, String password) {
-        AdminExample example = new AdminExample();
-        example.createCriteria().andUsernameEqualTo(username);
-        List<Admin> list = adminMapper.selectByExample(example);
+		AdminCondition condition = new AdminCondition();
+		condition.setUsername(username);
+		List<Admin> list = adminMapper.selectByCondition(condition);
         if (CollectionUtils.isEmpty(list) || list.size() != 1) {
             throw new ServiceException("用户不存在");
         } else {
@@ -51,9 +54,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin getAdminByUsername(String username) {
-        AdminExample example = new AdminExample();
-        example.createCriteria().andUsernameEqualTo(username);
-        List<Admin> list = adminMapper.selectByExample(example);
+		AdminCondition condition = new AdminCondition();
+		condition.setUsername(username);
+		List<Admin> list = adminMapper.selectByCondition(condition);
         if (CollectionUtils.isEmpty(list) || list.size() != 1) {
             return null;
         }

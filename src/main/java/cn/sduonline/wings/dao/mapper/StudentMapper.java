@@ -1,6 +1,9 @@
 package cn.sduonline.wings.dao.mapper;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Student;
+import cn.sduonline.wings.model.condition.StudentCondition;
 
 public interface StudentMapper {
     /**
@@ -50,4 +53,10 @@ public interface StudentMapper {
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
     int updateByPrimaryKey(Student record);
+
+	List<Student> selectByCondition(StudentCondition condition);
+
+	int insertBatch(List<Student> list);
+
+	List<Student> selectAll();
 }

@@ -1,6 +1,9 @@
 package cn.sduonline.wings.dao.mapper;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Course;
+import cn.sduonline.wings.model.condition.CourseCondition;
 
 public interface CourseMapper {
     /**
@@ -58,4 +61,8 @@ public interface CourseMapper {
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
     int updateByPrimaryKey(Course record);
+
+	List<Course> selectByCondition(CourseCondition condition);
+
+	Course selectByPrimaryKeyForUpdate(Long id);
 }

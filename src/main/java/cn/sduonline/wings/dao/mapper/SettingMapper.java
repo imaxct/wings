@@ -1,6 +1,9 @@
 package cn.sduonline.wings.dao.mapper;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Setting;
+import cn.sduonline.wings.model.condition.SettingCondition;
 
 public interface SettingMapper {
     /**
@@ -58,4 +61,6 @@ public interface SettingMapper {
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
     int updateByPrimaryKey(Setting record);
+
+	List<Setting> selectByCondition(SettingCondition condition);
 }

@@ -256,4 +256,71 @@
       qq = #{qq,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="selectByCondition" parameterType="cn.sduonline.wings.model.condition.StudentCondition"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wings_student
+        <where>
+            <if test="studentNo != null">
+                student_no = #{studentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="studentName != null">
+                and student_name = #{studentName,jdbcType=VARCHAR}
+            </if>
+            <if test="idNo != null">
+                and id_no = #{idNo,jdbcType=VARCHAR}
+            </if>
+            <if test="academy != null">
+                and academy = #{academy,jdbcType=VARCHAR}
+            </if>
+            <if test="campus != null">
+                and campus = #{campus,jdbcType=VARCHAR}
+            </if>
+            <if test="major != null">
+                and major = #{major,jdbcType=VARCHAR}
+            </if>
+            <if test="poorLevel != null">
+                and poor_level = #{poorLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex,jdbcType=VARCHAR}
+            </if>
+            <if test="className != null">
+                and class_name = #{className,jdbcType=VARCHAR}
+            </if>
+            <if test="nation != null">
+                and nation = #{nation,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="qq != null">
+                and qq = #{qq,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into wings_student (gmt_create, gmt_modified, student_no,
+        student_name, id_no, academy,
+        campus, major, poor_level,
+        sex, class_name, nation,
+        phone, email, qq)
+        values
+        <foreach collection="list" index="i" item="t" separator=",">
+            (now(), now(), #{t.studentNo,jdbcType=VARCHAR},
+            #{t.studentName,jdbcType=VARCHAR}, #{t.idNo,jdbcType=VARCHAR}, #{t.academy,jdbcType=VARCHAR},
+            #{t.campus,jdbcType=VARCHAR}, #{t.major,jdbcType=VARCHAR}, #{t.poorLevel,jdbcType=VARCHAR},
+            #{t.sex,jdbcType=VARCHAR}, #{t.className,jdbcType=VARCHAR}, #{t.nation,jdbcType=VARCHAR},
+            #{t.phone,jdbcType=VARCHAR}, #{t.email,jdbcType=VARCHAR}, #{t.qq,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wings_student
+    </select>
 </mapper>

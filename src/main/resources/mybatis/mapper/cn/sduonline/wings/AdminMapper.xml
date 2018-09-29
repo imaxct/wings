@@ -126,4 +126,15 @@
       password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="selectByCondition" parameterType="cn.sduonline.wings.model.condition.AdminCondition"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wings_admin
+        <where>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

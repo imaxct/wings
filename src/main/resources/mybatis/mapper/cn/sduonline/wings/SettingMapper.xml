@@ -154,4 +154,15 @@
         setting_name = #{settingName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="selectByCondition" parameterType="cn.sduonline.wings.model.condition.SettingCondition"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wings_setting
+        <where>
+            <if test="settingName != null">
+                setting_name = #{settingName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>
