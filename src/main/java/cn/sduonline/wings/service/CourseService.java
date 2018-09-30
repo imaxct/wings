@@ -1,5 +1,7 @@
 package cn.sduonline.wings.service;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Course;
 import cn.sduonline.wings.vo.Result;
 
@@ -13,7 +15,7 @@ public interface CourseService {
      *
      * @return
      */
-    Result<Course> getCourseList();
+	Result<List<Course>> getCourseList();
 
 
     /**
