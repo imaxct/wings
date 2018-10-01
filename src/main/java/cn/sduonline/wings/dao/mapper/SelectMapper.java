@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.sduonline.wings.model.Select;
 import cn.sduonline.wings.model.condition.SelectCondition;
+import cn.sduonline.wings.vo.SelectionFatVO;
 import cn.sduonline.wings.vo.SelectionVO;
 
 public interface SelectMapper {
@@ -60,4 +61,6 @@ public interface SelectMapper {
 	List<SelectionVO> selectJoinCourse(SelectCondition condition);
 
 	int countByCondition(SelectCondition condition);
+
+	List<SelectionFatVO> selectByConditionJoinStudent(SelectCondition condition);
 }

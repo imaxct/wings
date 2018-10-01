@@ -1,5 +1,6 @@
 package cn.sduonline.wings.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import cn.sduonline.wings.dao.mapper.CourseMapper;
@@ -84,9 +86,9 @@ public class StudentServiceImpl implements StudentService {
 			setting.setSettingName(SettingName.ANNOUNCEMENT);
 			setting.setSettingValue("无公告");
 			settingMapper.insert(setting);
-			return Result.ok(setting);
+			return Result.ok(setting.getSettingValue());
 		}
-		return Result.ok(list.get(0));
+		return Result.ok(list.get(0).getSettingValue());
 	}
 
 	@Override
@@ -99,8 +101,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Result selectCourse(Long studentId, Long courseId) {
-		Student student = studentMapper.selectByPrimaryKey(studentId);
+	public Result selectCourse(Student student, Long courseId) {
 
 		SettingCondition settingCondition = new SettingCondition();
 		settingCondition.setSettingName(SettingName.SELECT_LIMIT);
@@ -109,7 +110,7 @@ public class StudentServiceImpl implements StudentService {
 			Setting setting = settings.get(0);
 			int selectLimit = Integer.parseInt(setting.getSettingValue());
 			SelectCondition selectCondition = new SelectCondition();
-			selectCondition.setStudentId(studentId);
+			selectCondition.setStudentId(student.getId());
 			int selected = selectMapper.countByCondition(selectCondition);
 			if (selected >= selectLimit) {
 				return Result.err("当前选课数量已经超过本期选课数量限制", null);
@@ -119,9 +120,14 @@ public class StudentServiceImpl implements StudentService {
 		transactionTemplate.execute((t) -> {
 			try {
 				Course course = courseMapper.selectByPrimaryKeyForUpdate(courseId);
+				Assert.notNull(course, "课程不存在");
 
 				if (course.getAvailableNum() <= 0) {
 					return Result.err("课余量为0, 不能选择", null);
+				}
+
+				if (course.getDeadline().before(new Date(System.currentTimeMillis()))) {
+					return Result.err("该课程报名已经截止", null);
 				}
 
 				PoorLevelEnum poorLevel = PoorLevelEnum.valueOf(student.getPoorLevel());
@@ -139,7 +145,7 @@ public class StudentServiceImpl implements StudentService {
 
 				Select select = new Select();
 				select.setCourseId(courseId);
-				select.setStudentId(studentId);
+				select.setStudentId(student.getId());
 
 				selectMapper.insert(select);
 
@@ -154,19 +160,18 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Result deselectCourse(Long studentId, Long courseId) {
+	public Result deselectCourse(Student student, Long courseId) {
 		SelectCondition selectCondition = new SelectCondition();
-		selectCondition.setStudentId(studentId);
+		selectCondition.setStudentId(student.getId());
 		selectCondition.setCourseId(courseId);
 		List<Select> selectList = selectMapper.selectByCondition(selectCondition);
-		if (CollectionUtils.isEmpty(selectList)) {
-			return Result.err("退选失败, 未选择该课程", null);
-		}
-		Student student = studentMapper.selectByPrimaryKey(studentId);
+		Assert.notEmpty(selectList, "退选失败, 未选择该课程");
+
 		transactionTemplate.execute((t) -> {
 			try {
 				PoorLevelEnum poorLevel = PoorLevelEnum.valueOf(student.getPoorLevel());
 				Course course = courseMapper.selectByPrimaryKeyForUpdate(courseId);
+				Assert.notNull(course, "课程不存在");
 				if (poorLevel == PoorLevelEnum.NOT_POOR) {
 					course.setNotPoorNum(course.getNotPoorNum() + 1);
 				}

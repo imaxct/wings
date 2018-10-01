@@ -2,6 +2,8 @@ package cn.sduonline.wings.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Admin {
     /**
      *
@@ -46,6 +48,7 @@ public class Admin {
      *
      * @mbg.generated Sat Sep 29 20:10:15 CST 2018
      */
+	@JsonIgnore
     private String password;
 
     /**

@@ -1,5 +1,7 @@
 package cn.sduonline.wings.service;
 
+import java.util.List;
+
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionFatVO;
 
@@ -8,18 +10,18 @@ import cn.sduonline.wings.vo.SelectionFatVO;
  */
 public interface SelectionService {
 
-    /**
-     * 导出一门课的选课信息
-     *
-     * @param courseId
-     * @return
-     */
-    Result<SelectionFatVO> exportSelection(Long courseId);
+	/**
+	 * 导出一门课的选课信息
+	 *
+	 * @param courseId
+	 * @return
+	 */
+	Result<List<SelectionFatVO>> exportSelection(Long courseId);
 
-    /**
-     * 导出所有选课信息
-     *
-     * @return
-     */
-    Result<SelectionFatVO> exportAllSelection();
+	/**
+	 * 导出所有选课信息
+	 *
+	 * @return
+	 */
+	Result<List<SelectionFatVO>> exportAllSelection();
 }
