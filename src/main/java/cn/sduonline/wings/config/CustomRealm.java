@@ -11,11 +11,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.model.Admin;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.service.StudentService;
-import cn.sduonline.wings.util.RoleName;
 
 /**
  * Created by imaxct on 18-9-27.

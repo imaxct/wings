@@ -9,10 +9,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.service.SelectionService;
-import cn.sduonline.wings.util.RoleName;
 import cn.sduonline.wings.vo.Result;
 
 /**
@@ -25,12 +25,6 @@ public class AdminController {
 	private final AdminService adminService;
 
 	private final SelectionService selectionService;
-
-	@Autowired
-	public AdminController(AdminService adminService, SelectionService selectionService) {
-		this.adminService = adminService;
-		this.selectionService = selectionService;
-	}
 
 	@PutMapping("/import")
 	@RequiresRoles(RoleName.ROLE_ADMIN)
@@ -69,5 +63,11 @@ public class AdminController {
 	public Result logout() {
 		SecurityUtils.getSubject().logout();
 		return Result.ok(null);
+	}
+
+	@Autowired
+	public AdminController(AdminService adminService, SelectionService selectionService) {
+		this.adminService = adminService;
+		this.selectionService = selectionService;
 	}
 }

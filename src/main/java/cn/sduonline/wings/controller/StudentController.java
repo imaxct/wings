@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.StudentService;
-import cn.sduonline.wings.util.RoleName;
 import cn.sduonline.wings.vo.Result;
 
 /**
@@ -21,11 +21,6 @@ import cn.sduonline.wings.vo.Result;
 public class StudentController {
 
 	private final StudentService studentService;
-
-	@Autowired
-	public StudentController(StudentService studentService) {
-		this.studentService = studentService;
-	}
 
 	@PostMapping("/login")
 	public Result login(@RequestParam String username, @RequestParam String password) {
@@ -78,5 +73,10 @@ public class StudentController {
 	@RequiresRoles(RoleName.ROLE_STUDENT)
 	public Result getCourseList() {
 		return studentService.getCourseList();
+	}
+
+	@Autowired
+	public StudentController(StudentService studentService) {
+		this.studentService = studentService;
 	}
 }

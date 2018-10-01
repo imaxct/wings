@@ -1,4 +1,4 @@
-package cn.sduonline.wings.util;
+package cn.sduonline.wings.constant;
 
 /**
  * Created by imaxct on 18-9-27.

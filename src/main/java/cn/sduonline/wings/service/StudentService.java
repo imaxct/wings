@@ -13,17 +13,6 @@ import cn.sduonline.wings.vo.SelectionVO;
 public interface StudentService {
 
 	/**
-	 * 学生登录
-	 *
-	 * @param username
-	 *            学号
-	 * @param password
-	 *            身份证号或者教务密码
-	 * @return
-	 */
-	Result login(String username, String password);
-
-	/**
 	 * 通过学号获取
 	 *
 	 * @param stuNo

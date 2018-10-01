@@ -11,6 +11,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import cn.sduonline.wings.constant.SettingName;
 import cn.sduonline.wings.dao.mapper.CourseMapper;
 import cn.sduonline.wings.dao.mapper.SelectMapper;
 import cn.sduonline.wings.dao.mapper.SettingMapper;
@@ -21,7 +22,7 @@ import cn.sduonline.wings.model.condition.SelectCondition;
 import cn.sduonline.wings.model.condition.SettingCondition;
 import cn.sduonline.wings.model.condition.StudentCondition;
 import cn.sduonline.wings.service.StudentService;
-import cn.sduonline.wings.util.SettingName;
+import cn.sduonline.wings.util.AcademyUtil;
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionVO;
 
@@ -50,11 +51,6 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Result login(String username, String password) {
-		return null;
-	}
-
-	@Override
 	public Student getStudentByNo(String stuNo) {
 		StudentCondition condition = new StudentCondition();
 		condition.setStudentNo(stuNo);
@@ -67,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student getStudentByCrawler(String stuNo, String password) {
-		return null;
+		return new AcademyUtil().getStudent(stuNo, password);
 	}
 
 	@Override
