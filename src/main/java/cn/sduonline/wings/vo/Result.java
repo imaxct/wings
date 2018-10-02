@@ -11,15 +11,15 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Result<T> implements Serializable {
-	private boolean ok;
-	private String msg;
-	private T data;
+    private boolean ok;
+    private String msg;
+    private T data;
 
-	public static <T> Result ok(T data) {
-		return new Result<>(true, null, data);
-	}
+    public static <T> Result ok(T data) {
+        return new Result<>(true, null, data);
+    }
 
-	public static Result err(String msg, Object data) {
-		return new Result<>(false, msg, data);
-	}
+    public static Result err(String msg, Object data) {
+        return new Result<>(false, msg, data);
+    }
 }

@@ -22,52 +22,52 @@ import cn.sduonline.wings.vo.Result;
 @RequestMapping("/Admin")
 public class AdminController {
 
-	private final AdminService adminService;
+    private final AdminService adminService;
 
-	private final SelectionService selectionService;
+    private final SelectionService selectionService;
 
-	@PutMapping("/import")
-	@RequiresRoles(RoleName.ROLE_ADMIN)
-	public Result importStudent(@RequestBody List<Student> students) {
-		return adminService.importStudent(students);
-	}
+    @Autowired
+    public AdminController(AdminService adminService, SelectionService selectionService) {
+        this.adminService = adminService;
+        this.selectionService = selectionService;
+    }
 
-	@GetMapping("/listStudent")
-	@RequiresRoles(RoleName.ROLE_ADMIN)
-	public Result getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
-		return adminService.getStudent(pageNum, pageSize);
-	}
+    @PutMapping("/import")
+    @RequiresRoles(RoleName.ROLE_ADMIN)
+    public Result importStudent(@RequestBody List<Student> students) {
+        return adminService.importStudent(students);
+    }
 
-	@GetMapping("/exportSelect")
-	@RequiresRoles(RoleName.ROLE_ADMIN)
-	public Result exportCourseSelection(@RequestParam Long courseId) {
-		return selectionService.exportSelection(courseId);
-	}
+    @GetMapping("/listStudent")
+    @RequiresRoles(RoleName.ROLE_ADMIN)
+    public Result getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
+        return adminService.getStudent(pageNum, pageSize);
+    }
 
-	@GetMapping("/exportAll")
-	@RequiresRoles(RoleName.ROLE_ADMIN)
-	public Result exportAllSelection() {
-		return selectionService.exportAllSelection();
-	}
+    @GetMapping("/exportSelect")
+    @RequiresRoles(RoleName.ROLE_ADMIN)
+    public Result exportCourseSelection(@RequestParam Long courseId) {
+        return selectionService.exportSelection(courseId);
+    }
 
-	@PostMapping("/login")
-	public Result login(@RequestParam String username, @RequestParam String password) {
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		token.setRememberMe(true);
-		Subject currentUser = SecurityUtils.getSubject();
-		currentUser.login(token);
-		return Result.ok(adminService.getAdminByUsername(username));
-	}
+    @GetMapping("/exportAll")
+    @RequiresRoles(RoleName.ROLE_ADMIN)
+    public Result exportAllSelection() {
+        return selectionService.exportAllSelection();
+    }
 
-	@GetMapping("/logout")
-	public Result logout() {
-		SecurityUtils.getSubject().logout();
-		return Result.ok(null);
-	}
+    @PostMapping("/login")
+    public Result login(@RequestParam String username, @RequestParam String password) {
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        token.setRememberMe(true);
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.login(token);
+        return Result.ok(adminService.getAdminByUsername(username));
+    }
 
-	@Autowired
-	public AdminController(AdminService adminService, SelectionService selectionService) {
-		this.adminService = adminService;
-		this.selectionService = selectionService;
-	}
+    @GetMapping("/logout")
+    public Result logout() {
+        SecurityUtils.getSubject().logout();
+        return Result.ok(null);
+    }
 }

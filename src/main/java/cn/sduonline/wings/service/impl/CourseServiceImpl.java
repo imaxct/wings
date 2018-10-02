@@ -17,46 +17,46 @@ import cn.sduonline.wings.vo.Result;
 @Service
 @SuppressWarnings("unchecked")
 public class CourseServiceImpl implements CourseService {
-	private final CourseMapper courseMapper;
+    private final CourseMapper courseMapper;
 
-	@Autowired
-	public CourseServiceImpl(CourseMapper courseMapper) {
-		this.courseMapper = courseMapper;
-	}
+    @Autowired
+    public CourseServiceImpl(CourseMapper courseMapper) {
+        this.courseMapper = courseMapper;
+    }
 
-	@Override
-	public Result<List<Course>> getCourseList() {
-		List<Course> courseList = courseMapper.selectByCondition(new CourseCondition());
-		return Result.ok(courseList);
-	}
+    @Override
+    public Result<List<Course>> getCourseList() {
+        List<Course> courseList = courseMapper.selectByCondition(new CourseCondition());
+        return Result.ok(courseList);
+    }
 
-	@Override
-	public Result<Course> updateCourse(Course course) {
-		int num = courseMapper.updateByPrimaryKeyWithBLOBs(course);
-		if (num > 0) {
-			return Result.ok(num);
-		} else {
-			return Result.err("更新失败", num);
-		}
-	}
+    @Override
+    public Result<Course> updateCourse(Course course) {
+        int num = courseMapper.updateByPrimaryKeyWithBLOBs(course);
+        if (num > 0) {
+            return Result.ok(num);
+        } else {
+            return Result.err("更新失败", num);
+        }
+    }
 
-	@Override
-	public Result<Course> createCourse(Course course) {
-		int num = courseMapper.insert(course);
-		if (num > 0) {
-			return Result.ok(num);
-		} else {
-			return Result.err("创建失败", num);
-		}
-	}
+    @Override
+    public Result<Course> createCourse(Course course) {
+        int num = courseMapper.insert(course);
+        if (num > 0) {
+            return Result.ok(num);
+        } else {
+            return Result.err("创建失败", num);
+        }
+    }
 
-	@Override
-	public Result deleteCourse(Course course) {
-		int num = courseMapper.deleteByPrimaryKey(course.getId());
-		if (num > 0) {
-			return Result.ok(num);
-		} else {
-			return Result.err("删除失败", num);
-		}
-	}
+    @Override
+    public Result deleteCourse(Course course) {
+        int num = courseMapper.deleteByPrimaryKey(course.getId());
+        if (num > 0) {
+            return Result.ok(num);
+        } else {
+            return Result.err("删除失败", num);
+        }
+    }
 }

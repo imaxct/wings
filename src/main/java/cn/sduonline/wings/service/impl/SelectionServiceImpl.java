@@ -17,23 +17,23 @@ import cn.sduonline.wings.vo.SelectionFatVO;
 @Service
 @SuppressWarnings("unchecked")
 public class SelectionServiceImpl implements SelectionService {
-	private final SelectMapper selectMapper;
+    private final SelectMapper selectMapper;
 
-	@Autowired
-	public SelectionServiceImpl(SelectMapper selectMapper) {
-		this.selectMapper = selectMapper;
-	}
+    @Autowired
+    public SelectionServiceImpl(SelectMapper selectMapper) {
+        this.selectMapper = selectMapper;
+    }
 
-	@Override
-	public Result<List<SelectionFatVO>> exportSelection(Long courseId) {
-		SelectCondition condition = new SelectCondition();
-		condition.setCourseId(courseId);
-		List<SelectionFatVO> list = selectMapper.selectByConditionJoinStudent(condition);
-		return Result.ok(list);
-	}
+    @Override
+    public Result<List<SelectionFatVO>> exportSelection(Long courseId) {
+        SelectCondition condition = new SelectCondition();
+        condition.setCourseId(courseId);
+        List<SelectionFatVO> list = selectMapper.selectByConditionJoinStudent(condition);
+        return Result.ok(list);
+    }
 
-	@Override
-	public Result<List<SelectionFatVO>> exportAllSelection() {
-		return Result.ok(selectMapper.selectByConditionJoinStudent(new SelectCondition()));
-	}
+    @Override
+    public Result<List<SelectionFatVO>> exportAllSelection() {
+        return Result.ok(selectMapper.selectByConditionJoinStudent(new SelectCondition()));
+    }
 }

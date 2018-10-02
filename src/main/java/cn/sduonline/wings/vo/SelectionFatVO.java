@@ -11,10 +11,10 @@ import lombok.Data;
  */
 @Data
 public class SelectionFatVO implements Serializable {
-	private Long id;
-	private Date gmtCreate;
-	private Long courseId;
-	private Long studentId;
-	private Student student;
-	private String courseName;
+    private Long id;
+    private Date gmtCreate;
+    private Long courseId;
+    private Long studentId;
+    private Student student;
+    private String courseName;
 }

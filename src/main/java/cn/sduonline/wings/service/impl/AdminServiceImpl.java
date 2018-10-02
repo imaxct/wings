@@ -37,9 +37,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result login(String username, String password) {
-		AdminCondition condition = new AdminCondition();
-		condition.setUsername(username);
-		List<Admin> list = adminMapper.selectByCondition(condition);
+        AdminCondition condition = new AdminCondition();
+        condition.setUsername(username);
+        List<Admin> list = adminMapper.selectByCondition(condition);
         if (CollectionUtils.isEmpty(list) || list.size() != 1) {
             throw new ServiceException("用户不存在");
         } else {
@@ -54,9 +54,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin getAdminByUsername(String username) {
-		AdminCondition condition = new AdminCondition();
-		condition.setUsername(username);
-		List<Admin> list = adminMapper.selectByCondition(condition);
+        AdminCondition condition = new AdminCondition();
+        condition.setUsername(username);
+        List<Admin> list = adminMapper.selectByCondition(condition);
         if (CollectionUtils.isEmpty(list) || list.size() != 1) {
             return null;
         }
