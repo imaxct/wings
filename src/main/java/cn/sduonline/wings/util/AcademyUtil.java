@@ -58,6 +58,8 @@ public class AcademyUtil {
             return null;
         }
 
+        cookies.remove();
+
         if (response.statusCode() == 200) {
 
             JSONObject object = JSONObject.fromObject(response.body());

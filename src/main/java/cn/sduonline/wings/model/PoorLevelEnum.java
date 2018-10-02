@@ -4,17 +4,29 @@ package cn.sduonline.wings.model;
  * Created by imaxct on 18-9-29.
  */
 public enum PoorLevelEnum {
-	NOT_POOR("非困难"),
-	NORMAL("困难"),
-	SPECIAL("特殊困难");
 
-	private String desc;
+    /**
+     * 非困难
+     */
+    NOT_POOR("非困难"),
 
-	PoorLevelEnum(String desc) {
-		this.desc = desc;
-	}
+    /**
+     * 困难
+     */
+    NORMAL("困难"),
 
-	public String getDesc() {
-		return desc;
-	}
+    /**
+     * 特殊困难
+     */
+    SPECIAL("特殊困难");
+
+    private String desc;
+
+    PoorLevelEnum(String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }
