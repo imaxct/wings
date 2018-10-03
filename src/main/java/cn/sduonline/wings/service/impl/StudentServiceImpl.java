@@ -1,10 +1,5 @@
 package cn.sduonline.wings.service.impl;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +23,7 @@ import cn.sduonline.wings.model.condition.SettingCondition;
 import cn.sduonline.wings.model.condition.StudentCondition;
 import cn.sduonline.wings.service.StudentService;
 import cn.sduonline.wings.util.AcademyUtil;
+import cn.sduonline.wings.util.BeanUtil;
 import cn.sduonline.wings.vo.Result;
 import cn.sduonline.wings.vo.SelectionVO;
 
@@ -72,23 +68,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student saveStudent(Student student) {
         Student dbStudent = studentMapper.selectByPrimaryKey(student.getId());
-        studentMapper.insertSelective(parseStudent(dbStudent, student));
+        studentMapper.insertSelective(BeanUtil.parseObject(dbStudent, student, Student.class));
         return student;
-    }
-
-    public Student parseStudent(Student db, Student student) {
-        try {
-            BeanInfo info = Introspector.getBeanInfo(Student.class);
-            for (PropertyDescriptor desc : info.getPropertyDescriptors()) {
-                if (null == desc.getReadMethod().invoke(db)) {
-                    desc.getWriteMethod().invoke(db, desc.getReadMethod().invoke(student));
-                }
-            }
-        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-            LOGGER.error("parse", e);
-            throw new IllegalArgumentException("保存失败");
-        }
-        return db;
     }
 
     @Override

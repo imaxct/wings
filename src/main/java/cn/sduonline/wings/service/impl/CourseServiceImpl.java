@@ -9,6 +9,7 @@ import cn.sduonline.wings.dao.mapper.CourseMapper;
 import cn.sduonline.wings.model.Course;
 import cn.sduonline.wings.model.condition.CourseCondition;
 import cn.sduonline.wings.service.CourseService;
+import cn.sduonline.wings.util.BeanUtil;
 import cn.sduonline.wings.vo.Result;
 
 /**
@@ -32,7 +33,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result<Course> updateCourse(Course course) {
-        int num = courseMapper.updateByPrimaryKeyWithBLOBs(course);
+        Course dbCourse = courseMapper.selectByPrimaryKey(course.getId());
+        int num = courseMapper.updateByPrimaryKeyWithBLOBs(BeanUtil.parseObject(dbCourse, course, Course.class));
         if (num > 0) {
             return Result.ok(num);
         } else {
