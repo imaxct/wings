@@ -6,9 +6,9 @@ mybatis:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: million
-    url: jdbc:mysql://localhost:3306/student?useUnicode=true&character_set_server=utf8mb4
+    username: wings
+    password: 0nlin@wings
+    url: jdbc:mysql://10.10.10.10:3306/wings?useUnicode=true&character_set_server=utf8mb4
 
 pagehelper:
   reasonable: true

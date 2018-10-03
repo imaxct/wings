@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import cn.sduonline.wings.constant.SettingName;
 import cn.sduonline.wings.dao.mapper.CourseMapper;
@@ -67,8 +68,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student saveStudent(Student student) {
+        Assert.notNull(student, "对象为空");
         Student dbStudent = studentMapper.selectByPrimaryKey(student.getId());
-        studentMapper.insertSelective(BeanUtil.parseObject(dbStudent, student, Student.class));
+        if (null != dbStudent) {
+            student = BeanUtil.parseObject(dbStudent, student, Student.class);
+        }
+        studentMapper.insertSelective(student);
         return student;
     }
 
@@ -124,6 +129,12 @@ public class StudentServiceImpl implements StudentService {
 
                 if (course.getDeadline().before(new Date(System.currentTimeMillis()))) {
                     return Result.err("该课程报名已经截止", null);
+                }
+
+                if (!StringUtils.isEmpty(course.getGradeLimit())) {
+                    if (!course.getGradeLimit().contains(student.getGrade())) {
+                        return Result.err("当前年级不允许报名此课", null);
+                    }
                 }
 
                 PoorLevelEnum poorLevel = PoorLevelEnum.valueOf(student.getPoorLevel());

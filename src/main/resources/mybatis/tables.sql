@@ -1,20 +1,3 @@
--- MySQL dump 10.16  Distrib 10.1.35-MariaDB, for Linux (x86_64)
---
--- Host: 127.0.0.1    Database: student
--- ------------------------------------------------------
--- Server version	10.1.35-MariaDB
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
 -- Table structure for table `wings_admin`
 --
@@ -31,6 +14,11 @@ CREATE TABLE `wings_admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wings_admin`
+--
+
 
 --
 -- Table structure for table `wings_course`
@@ -57,6 +45,10 @@ CREATE TABLE `wings_course` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `wings_course`
+--
+
+--
 -- Table structure for table `wings_select`
 --
 
@@ -74,6 +66,10 @@ CREATE TABLE `wings_select` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `wings_select`
+--
+
+--
 -- Table structure for table `wings_setting`
 --
 
@@ -85,11 +81,15 @@ CREATE TABLE `wings_setting` (
   `gmt_create` datetime NOT NULL,
   `gmt_modified` datetime NOT NULL,
   `setting_name` varchar(64) DEFAULT NULL,
-  `setting_value` varchar(200) NOT NULL,
+  `setting_value` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `wings_setting_setting_name_uindex` (`setting_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设置';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wings_setting`
+--
 
 --
 -- Table structure for table `wings_student`
@@ -115,19 +115,10 @@ CREATE TABLE `wings_student` (
   `phone` varchar(11) DEFAULT NULL COMMENT '手机号',
   `email` varchar(64) DEFAULT NULL,
   `qq` varchar(20) DEFAULT NULL COMMENT 'QQ号',
+  `grade` varchar(10) DEFAULT NULL COMMENT '年级',
   PRIMARY KEY (`id`),
   UNIQUE KEY `wings_student_student_no_uindex` (`student_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-09-26  9:53:51
+-- Dump completed on 2018-10-03 16:56:07
