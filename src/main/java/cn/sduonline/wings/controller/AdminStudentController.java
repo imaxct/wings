@@ -38,4 +38,9 @@ public class AdminStudentController {
     public Result<Page<Student>> getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
         return adminService.getStudent(pageNum, pageSize);
     }
+
+    @PostMapping("/updateStudent")
+    public Result updateStudentInfo(@RequestBody Student student) {
+        return adminService.updateStudent(student);
+    }
 }

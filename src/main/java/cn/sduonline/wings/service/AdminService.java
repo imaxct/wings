@@ -1,10 +1,10 @@
 package cn.sduonline.wings.service;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Admin;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.vo.Result;
-
-import java.util.List;
 
 /**
  * Created by imaxct on 18-9-26.
@@ -50,5 +50,12 @@ public interface AdminService {
      */
     Result getStudent(int pageNum, int pageSize);
 
+    /**
+     * 更新学生数据
+     * 
+     * @param student
+     * @return
+     */
+    Result updateStudent(Student student);
 
 }

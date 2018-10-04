@@ -87,4 +87,14 @@ public class AdminServiceImpl implements AdminService {
         Page<Student> studentPage = PageHelper.startPage(pageNum, pageSize).doSelectPage(studentMapper::selectAll);
         return Result.ok(studentPage);
     }
+
+    @Override
+    public Result updateStudent(Student student) {
+        int num = studentMapper.updateByPrimaryKeySelective(student);
+        if (num > 0) {
+            return Result.ok(num);
+        } else {
+            return Result.err("保存失败", num);
+        }
+    }
 }
