@@ -6,6 +6,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.github.pagehelper.Page;
+
 import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.AdminService;
@@ -16,6 +18,8 @@ import cn.sduonline.wings.vo.Result;
  */
 @RestController
 @RequestMapping("/Admin")
+@SuppressWarnings("unchecked")
+@RequiresRoles(RoleName.ROLE_ADMIN)
 public class AdminStudentController {
     private final AdminService adminService;
 
@@ -31,8 +35,7 @@ public class AdminStudentController {
     }
 
     @GetMapping("/listStudent")
-    @RequiresRoles(RoleName.ROLE_ADMIN)
-    public Result getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
+    public Result<Page<Student>> getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
         return adminService.getStudent(pageNum, pageSize);
     }
 }

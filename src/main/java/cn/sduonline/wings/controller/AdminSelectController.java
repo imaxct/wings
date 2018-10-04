@@ -1,5 +1,7 @@
 package cn.sduonline.wings.controller;
 
+import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.service.SelectionService;
 import cn.sduonline.wings.vo.Result;
+import cn.sduonline.wings.vo.SelectionFatVO;
 
 /**
  * Created by imaxct on 18-10-3.
@@ -27,13 +30,13 @@ public class AdminSelectController {
 
     @GetMapping("/exportSelect")
     @RequiresRoles(RoleName.ROLE_ADMIN)
-    public Result exportCourseSelection(@RequestParam Long courseId) {
+    public Result<List<SelectionFatVO>> exportCourseSelection(@RequestParam Long courseId) {
         return selectionService.exportSelection(courseId);
     }
 
     @GetMapping("/exportAll")
     @RequiresRoles(RoleName.ROLE_ADMIN)
-    public Result exportAllSelection() {
+    public Result<List<SelectionFatVO>> exportAllSelection() {
         return selectionService.exportAllSelection();
     }
 }

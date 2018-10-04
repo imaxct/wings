@@ -1,5 +1,7 @@
 package cn.sduonline.wings.controller;
 
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import cn.sduonline.wings.vo.Result;
 @RestController
 @RequestMapping("/Admin")
 @RequiresRoles(RoleName.ROLE_ADMIN)
+@SuppressWarnings("unchecked")
 public class AdminSettingController {
 
     private final SettingService settingService;
@@ -25,7 +28,7 @@ public class AdminSettingController {
     }
 
     @GetMapping("/getSetting")
-    public Result getAllSettings() {
+    public Result<Map<String, String>> getAllSettings() {
         return settingService.getAllSettings();
     }
 

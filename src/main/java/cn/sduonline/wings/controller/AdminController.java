@@ -6,6 +6,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import cn.sduonline.wings.model.Admin;
 import cn.sduonline.wings.service.AdminService;
 import cn.sduonline.wings.vo.Result;
 
@@ -14,6 +15,7 @@ import cn.sduonline.wings.vo.Result;
  */
 @RestController
 @RequestMapping("/Admin")
+@SuppressWarnings("unchecked")
 public class AdminController {
 
     private final AdminService adminService;
@@ -24,7 +26,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
+    public Result<Admin> login(@RequestParam String username, @RequestParam String password) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
         Subject currentUser = SecurityUtils.getSubject();

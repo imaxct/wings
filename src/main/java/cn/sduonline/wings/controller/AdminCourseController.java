@@ -1,5 +1,7 @@
 package cn.sduonline.wings.controller;
 
+import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,7 @@ public class AdminCourseController {
     }
 
     @GetMapping("/courseList")
-    public Result getCourseList() {
+    public Result<List<Course>> getCourseList() {
         return courseService.getCourseList();
     }
 

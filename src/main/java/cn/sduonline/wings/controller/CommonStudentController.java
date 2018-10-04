@@ -6,6 +6,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.StudentService;
 import cn.sduonline.wings.vo.Result;
 
@@ -14,6 +15,7 @@ import cn.sduonline.wings.vo.Result;
  */
 @RestController
 @RequestMapping("/Common")
+@SuppressWarnings("unchecked")
 public class CommonStudentController {
     private final StudentService studentService;
 
@@ -23,12 +25,12 @@ public class CommonStudentController {
     }
 
     @GetMapping("/announce")
-    public Result getAnnouncement() {
+    public Result<String> getAnnouncement() {
         return studentService.getAnnouncement();
     }
 
     @PostMapping("/login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
+    public Result<Student> login(@RequestParam String username, @RequestParam String password) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
         Subject currentUser = SecurityUtils.getSubject();
