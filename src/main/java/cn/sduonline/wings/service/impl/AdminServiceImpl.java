@@ -8,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import cn.sduonline.wings.dao.mapper.AdminMapper;
 import cn.sduonline.wings.dao.mapper.CourseMapper;
@@ -98,7 +99,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result getStudent(int pageNum, int pageSize) {
         Page<Student> studentPage = PageHelper.startPage(pageNum, pageSize).doSelectPage(studentMapper::selectAll);
-        return Result.ok(studentPage);
+        return Result.ok(new PageInfo<>(studentPage));
     }
 
     @Override

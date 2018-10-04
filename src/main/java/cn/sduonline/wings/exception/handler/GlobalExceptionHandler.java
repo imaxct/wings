@@ -1,6 +1,7 @@
 package cn.sduonline.wings.exception.handler;
 
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String LOG_NAME = "wings-service";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LOG_NAME);
+
+    @ExceptionHandler({AuthorizationException.class})
+    public ResponseEntity<ErrorDetail> handleAuthorizationException(AuthorizationException exception) {
+        ErrorDetail detail = new ErrorDetail(false, "登录已过期或未登录", null);
+        LOGGER.info("handleAuthorizationException", exception);
+        return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
+    }
 
     @ExceptionHandler({AuthException.class, AuthenticationException.class})
     public ResponseEntity<ErrorDetail> handleAuthException(Exception exception, WebRequest request) {
