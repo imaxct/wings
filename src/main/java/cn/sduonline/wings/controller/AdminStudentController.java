@@ -6,8 +6,6 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.github.pagehelper.Page;
-
 import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.AdminService;
@@ -35,7 +33,7 @@ public class AdminStudentController {
     }
 
     @GetMapping("/listStudent")
-    public Result<Page<Student>> getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
+    public Result getStudent(@RequestParam int pageNum, @RequestParam int pageSize) {
         return adminService.getStudent(pageNum, pageSize);
     }
 

@@ -65,4 +65,6 @@ public interface CourseMapper {
 	List<Course> selectByCondition(CourseCondition condition);
 
 	Course selectByPrimaryKeyForUpdate(Long id);
+
+    int deleteAll();
 }

@@ -53,4 +53,6 @@ public interface StudentMapper {
 	int insertBatch(List<Student> list);
 
 	List<Student> selectAll();
+
+    int deleteAll();
 }

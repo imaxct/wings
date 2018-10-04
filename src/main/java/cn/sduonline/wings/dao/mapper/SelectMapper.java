@@ -63,4 +63,6 @@ public interface SelectMapper {
 	int countByCondition(SelectCondition condition);
 
 	List<SelectionFatVO> selectByConditionJoinStudent(SelectCondition condition);
+
+    int deleteAll();
 }

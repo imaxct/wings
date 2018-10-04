@@ -10,6 +10,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 import cn.sduonline.wings.dao.mapper.AdminMapper;
+import cn.sduonline.wings.dao.mapper.CourseMapper;
+import cn.sduonline.wings.dao.mapper.SelectMapper;
 import cn.sduonline.wings.dao.mapper.StudentMapper;
 import cn.sduonline.wings.exception.ServiceException;
 import cn.sduonline.wings.model.Admin;
@@ -29,10 +31,17 @@ public class AdminServiceImpl implements AdminService {
 
     private final AdminMapper adminMapper;
 
+    private final SelectMapper selectMapper;
+
+    private final CourseMapper courseMapper;
+
     @Autowired
-    public AdminServiceImpl(StudentMapper studentMapper, AdminMapper adminMapper) {
+    public AdminServiceImpl(StudentMapper studentMapper, AdminMapper adminMapper, SelectMapper selectMapper,
+        CourseMapper courseMapper) {
         this.studentMapper = studentMapper;
         this.adminMapper = adminMapper;
+        this.selectMapper = selectMapper;
+        this.courseMapper = courseMapper;
     }
 
     @Override
@@ -70,6 +79,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result importStudent(List<Student> students) {
+        int courseNum = courseMapper.deleteAll();
+        int studentNum = studentMapper.deleteAll();
+        int selectNum = selectMapper.deleteAll();
         int total = 0;
         int cnt = students.size() / 50;
         int start, end;
@@ -79,7 +91,8 @@ public class AdminServiceImpl implements AdminService {
             end = end > students.size() ? students.size() : end;
             total += studentMapper.insertBatch(students.subList(start, end));
         }
-        return Result.ok(String.format("导入:%d/%d条", total, students.size()));
+        return Result.ok(String.format("导入:%d/%d条, 删除课程数据%d条, 删除学生数据%d条 删除选课数据%d条", total, students.size(), courseNum,
+            studentNum, selectNum));
     }
 
     @Override

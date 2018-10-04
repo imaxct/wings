@@ -241,4 +241,7 @@
             </if>
         </where>
     </select>
+    <delete id="deleteAll">
+      delete from wings_select
+    </delete>
 </mapper>

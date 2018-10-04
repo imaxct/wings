@@ -334,4 +334,7 @@
         <include refid="Base_Column_List"/>
         from wings_student
     </select>
+    <delete id="deleteAll">
+      delete from wings_student
+    </delete>
 </mapper>
