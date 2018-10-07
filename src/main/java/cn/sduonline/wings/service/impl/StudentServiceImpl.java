@@ -73,8 +73,13 @@ public class StudentServiceImpl implements StudentService {
         if (null != dbStudent) {
             student = BeanUtil.parseObject(dbStudent, student, Student.class);
         }
-        studentMapper.insertSelective(student);
+        studentMapper.updateByPrimaryKeySelective(student);
         return student;
+    }
+
+    public int createStudent(Student student) {
+        Assert.notNull(student, "对象为空");
+        return studentMapper.insert(student);
     }
 
     @Override

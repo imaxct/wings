@@ -73,4 +73,12 @@ public interface StudentService {
 	 * @return
 	 */
 	Result<List<Course>> getCourseList();
+
+    /**
+     * 新建
+     * 
+     * @param student
+     * @return
+     */
+    int createStudent(Student student);
 }

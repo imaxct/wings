@@ -53,7 +53,7 @@ public class CustomRealm extends AuthorizingRealm {
 				if (student == null) {
 					throw new AuthenticationException("登录失败, 用户不存在");
 				} else {
-					studentService.saveStudent(student);
+                    studentService.createStudent(student);
 					return new SimpleAuthenticationInfo(username, new String(usernamePasswordToken.getPassword()),
 							RoleName.ROLE_STUDENT);
 				}
