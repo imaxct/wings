@@ -1,5 +1,7 @@
 package cn.sduonline.wings.service;
 
+import java.util.List;
+
 import cn.sduonline.wings.model.Setting;
 import cn.sduonline.wings.vo.Result;
 
@@ -13,7 +15,7 @@ public interface SettingService {
      * 
      * @return
      */
-    Result getAllSettings();
+    List<Setting> getAllSettings();
 
     /**
      * 更新设置

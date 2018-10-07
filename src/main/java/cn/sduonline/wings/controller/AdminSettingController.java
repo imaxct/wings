@@ -1,6 +1,9 @@
 package cn.sduonline.wings.controller;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,8 @@ public class AdminSettingController {
 
     @GetMapping("/getSetting")
     public Result<Map<String, String>> getAllSettings() {
-        return settingService.getAllSettings();
+        List<Setting> settingList = settingService.getAllSettings();
+        return Result.ok(settingList.stream().collect(Collectors.toMap(Setting::getSettingName, Function.identity())));
     }
 
     @PostMapping("/updateSetting")
