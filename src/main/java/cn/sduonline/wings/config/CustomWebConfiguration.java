@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import cn.sduonline.wings.interceptor.SiteOpenInterceptor;
 import cn.sduonline.wings.interceptor.StudentInfoInterceptor;
 
 /**
@@ -13,15 +14,19 @@ import cn.sduonline.wings.interceptor.StudentInfoInterceptor;
 @Configuration
 public class CustomWebConfiguration implements WebMvcConfigurer {
     private final StudentInfoInterceptor studentInfoInterceptor;
+    private final SiteOpenInterceptor siteOpenInterceptor;
 
     @Autowired
-    public CustomWebConfiguration(StudentInfoInterceptor studentInfoInterceptor) {
+    public CustomWebConfiguration(StudentInfoInterceptor studentInfoInterceptor,
+        SiteOpenInterceptor siteOpenInterceptor) {
         this.studentInfoInterceptor = studentInfoInterceptor;
+        this.siteOpenInterceptor = siteOpenInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(studentInfoInterceptor).addPathPatterns("/Student/**")
             .excludePathPatterns("/Student/fill");
+        registry.addInterceptor(siteOpenInterceptor).addPathPatterns("/Student/**").addPathPatterns("/Common/login");
     }
 }
