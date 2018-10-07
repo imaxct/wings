@@ -22,4 +22,12 @@ public interface SettingService {
      * @return
      */
     Result updateSetting(Setting setting);
+
+    /**
+     * 获取设置
+     * 
+     * @param name
+     * @return
+     */
+    String getSettingByName(String name);
 }

@@ -13,4 +13,9 @@ public class SettingName {
      * 本期选课上限
      */
     public static final String SELECT_LIMIT = "SELECT_LIMIT";
+
+    /**
+     * 站点开关 true=开 false=关
+     */
+    public static final String SITE_OPEN = "SITE_OPEN";
 }
