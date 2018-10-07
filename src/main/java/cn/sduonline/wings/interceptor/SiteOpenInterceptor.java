@@ -34,6 +34,6 @@ public class SiteOpenInterceptor implements HandlerInterceptor {
             return true;
         }
         response.getWriter().println("<h1>站点关闭</h1>");
-        return true;
+        return false;
     }
 }

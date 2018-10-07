@@ -1,6 +1,7 @@
 package cn.sduonline.wings.exception.handler;
 
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorDetail> handleAuthorizationException(AuthorizationException exception) {
         ErrorDetail detail = new ErrorDetail(false, "登录已过期或未登录", null);
         LOGGER.info("handleAuthorizationException", exception);
+        return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(IncorrectCredentialsException.class)
+    public ResponseEntity<ErrorDetail> handleIncorrectCredentialsException(IncorrectCredentialsException exception) {
+        ErrorDetail detail = new ErrorDetail(false, "密码错误", null);
+        LOGGER.info("handleIncorrectCredentialsException", exception);
         return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
     }
 

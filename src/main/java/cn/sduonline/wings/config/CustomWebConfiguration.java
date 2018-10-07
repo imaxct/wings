@@ -27,6 +27,7 @@ public class CustomWebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(studentInfoInterceptor).addPathPatterns("/Student/**")
             .excludePathPatterns("/Student/fill");
-        registry.addInterceptor(siteOpenInterceptor).addPathPatterns("/Student/**").addPathPatterns("/Common/login");
+        registry.addInterceptor(siteOpenInterceptor).addPathPatterns("/Student/**")
+            .excludePathPatterns("/Common/login");
     }
 }
