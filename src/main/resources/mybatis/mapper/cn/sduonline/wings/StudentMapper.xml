@@ -312,6 +312,9 @@
             <if test="qq != null">
                 and qq = #{qq,jdbcType=VARCHAR}
             </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
     <insert id="insertBatch" parameterType="java.util.List">
@@ -319,14 +322,15 @@
         student_name, id_no, academy,
         campus, major, poor_level,
         sex, class_name, nation,
-        phone, email, qq)
+        phone, email, qq, grade)
         values
         <foreach collection="list" index="i" item="t" separator=",">
             (now(), now(), #{t.studentNo,jdbcType=VARCHAR},
             #{t.studentName,jdbcType=VARCHAR}, #{t.idNo,jdbcType=VARCHAR}, #{t.academy,jdbcType=VARCHAR},
             #{t.campus,jdbcType=VARCHAR}, #{t.major,jdbcType=VARCHAR}, #{t.poorLevel,jdbcType=VARCHAR},
             #{t.sex,jdbcType=VARCHAR}, #{t.className,jdbcType=VARCHAR}, #{t.nation,jdbcType=VARCHAR},
-            #{t.phone,jdbcType=VARCHAR}, #{t.email,jdbcType=VARCHAR}, #{t.qq,jdbcType=VARCHAR})
+            #{t.phone,jdbcType=VARCHAR}, #{t.email,jdbcType=VARCHAR}, #{t.qq,jdbcType=VARCHAR},
+            #{t.grade,jdbcType=VARCHAR})
         </foreach>
     </insert>
     <select id="selectAll" resultMap="BaseResultMap">
