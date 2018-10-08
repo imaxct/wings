@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import cn.sduonline.wings.constant.RoleName;
@@ -39,6 +40,8 @@ public class AdminStudentController {
 
     @PostMapping("/updateStudent")
     public Result updateStudentInfo(@RequestBody Student student) {
+        Assert.notNull(student, "参数不能为空");
+        Assert.notNull(student.getId(), "id不能为空");
         return adminService.updateStudent(student);
     }
 }

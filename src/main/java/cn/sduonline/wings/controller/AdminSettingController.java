@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import cn.sduonline.wings.constant.RoleName;
@@ -38,6 +39,8 @@ public class AdminSettingController {
 
     @PostMapping("/updateSetting")
     public Result updateSetting(@RequestBody Setting setting) {
+        Assert.notNull(setting, "参数不能为空");
+        Assert.notNull(setting.getId(), "id不能为空");
         return settingService.updateSetting(setting);
     }
 }

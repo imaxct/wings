@@ -62,6 +62,8 @@ public class StudentController {
 
     @PutMapping("/fill")
     public Result<Student> fillInfo(@RequestBody Student student) {
+        Assert.notNull(student, "参数不能为空");
+        Assert.notNull(student.getId(), "id不能为空");
         return Result.ok(studentService.saveStudent(student));
     }
 }

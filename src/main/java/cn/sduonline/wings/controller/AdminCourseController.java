@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import cn.sduonline.wings.constant.RoleName;
@@ -33,16 +34,24 @@ public class AdminCourseController {
 
     @PostMapping("/updateCourse")
     public Result updateCourse(@RequestBody Course course) {
+        Assert.notNull(course, "课程对象不能为空");
+        Assert.notNull(course.getId(), "课程id不能为空");
         return courseService.updateCourse(course);
     }
 
     @PutMapping("/createCourse")
     public Result createCourse(@RequestBody Course course) {
+        Assert.notNull(course, "课程对象不能为空");
+        Assert.notNull(course.getTotalNum(), "总数不能为空");
+        Assert.notNull(course.getNotPoorNum(), "非贫困数量不能为空");
+        course.setAvailableNum(course.getTotalNum());
         return courseService.createCourse(course);
     }
 
     @DeleteMapping("/deleteCourse")
     public Result deleteCourse(@RequestBody Course course) {
+        Assert.notNull(course, "课程对象不能为空");
+        Assert.notNull(course.getId(), "课程id不能为空");
         return courseService.deleteCourse(course);
     }
 }
