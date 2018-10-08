@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: wings
     password: 0nlin@wings
-    url: jdbc:mysql://10.10.10.10:3306/wings?useUnicode=true&character_set_server=utf8mb4
+    url: jdbc:mysql://10.10.10.10:3306/wings?useUnicode=true&character_set_server=utf8mb4&useSSL=false
 
 pagehelper:
   reasonable: true
