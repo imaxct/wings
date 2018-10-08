@@ -201,6 +201,7 @@
             <result column="phone" jdbcType="VARCHAR" property="phone"/>
             <result column="email" jdbcType="VARCHAR" property="email"/>
             <result column="qq" jdbcType="VARCHAR" property="qq"/>
+            <result column="grade" jdbcType="VARCHAR" property="grade"/>
         </association>
     </resultMap>
     <select id="selectByConditionJoinStudent" parameterType="cn.sduonline.wings.model.condition.SelectCondition"
@@ -223,7 +224,8 @@
         st.nation as s_nation,
         st.phone as s_phone,
         st.email as s_email,
-        st.qq as s_qq
+        st.qq as s_qq,
+        st.grade as s_grade
         from
         (
         wings_select s
