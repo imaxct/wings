@@ -123,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
-        transactionTemplate.execute((t) -> {
+        return transactionTemplate.execute((t) -> {
             try {
                 Course course = courseMapper.selectByPrimaryKeyForUpdate(courseId);
                 Assert.notNull(course, "课程不存在");
@@ -168,7 +168,6 @@ public class StudentServiceImpl implements StudentService {
                 return Result.err("选课失败, 重复选课或课余量不足", null);
             }
         });
-        return Result.err("选课失败", null);
     }
 
     @Override
