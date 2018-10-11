@@ -26,8 +26,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LOG_NAME);
 
-    @ExceptionHandler({AuthorizationException.class})
-    public ResponseEntity<ErrorDetail> handleAuthorizationException(AuthorizationException exception) {
+    @ExceptionHandler({AuthorizationException.class, AuthenticationException.class})
+    public ResponseEntity<ErrorDetail> handleAuthorizationException(Exception exception) {
         ErrorDetail detail = new ErrorDetail(false, "登录已过期或未登录", null);
         LOGGER.info("handleAuthorizationException", exception);
         return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
@@ -40,8 +40,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({AuthException.class, AuthenticationException.class})
-    public ResponseEntity<ErrorDetail> handleAuthException(Exception exception, WebRequest request) {
+    @ExceptionHandler({AuthException.class})
+    public ResponseEntity<ErrorDetail> handleAuthException(AuthException exception, WebRequest request) {
         ErrorDetail detail = new ErrorDetail(false, exception.getMessage(), request.getDescription(false));
         LOGGER.info("handleAuthException", exception);
         return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
