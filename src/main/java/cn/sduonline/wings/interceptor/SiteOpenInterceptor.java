@@ -33,7 +33,11 @@ public class SiteOpenInterceptor implements HandlerInterceptor {
         if ("true".equalsIgnoreCase(siteOpen)) {
             return true;
         }
-        response.getWriter().println("<h1>站点关闭</h1>");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(404);
+        response.setContentType("application/json");
+        // {"ok":false,"msg":"站点关闭","data":null}
+        response.getWriter().println("{\"ok\":false,\"msg\":\"站点关闭\",\"data\":null}");
         return false;
     }
 }

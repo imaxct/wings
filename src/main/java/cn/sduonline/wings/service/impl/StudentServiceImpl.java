@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
@@ -146,12 +147,19 @@ public class StudentServiceImpl implements StudentService {
                 if (poorLevel == PoorLevelEnum.NOT_POOR) {
                     if (course.getNotPoorNum() <= 0) {
                         return Result.err("非困难名额已满", null);
+                    } else {
+                        course.setNotPoorNum(course.getNotPoorNum() - 1);
                     }
-                } else {
-                    course.setNotPoorNum(course.getNotPoorNum() - 1);
                 }
 
                 course.setAvailableNum(course.getAvailableNum() - 1);
+
+                if (course.getAvailableNum() < course.getNotPoorNum()) {
+                    course.setNotPoorNum(course.getAvailableNum());
+                }
+
+                Assert.isTrue(course.getNotPoorNum() >= 0, "课余量不足");
+                Assert.isTrue(course.getAvailableNum() >= 0, "课余量不足");
 
                 courseMapper.updateByPrimaryKeySelective(course);
 
@@ -162,6 +170,14 @@ public class StudentServiceImpl implements StudentService {
                 selectMapper.insert(select);
 
                 return Result.ok(null);
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("selectCourse", e);
+                t.setRollbackOnly();
+                return Result.err(e.getMessage(), null);
+            } catch (DuplicateKeyException e) {
+                LOGGER.error("selectCourse", e);
+                t.setRollbackOnly();
+                return Result.err("选课失败, 重复选课", null);
             } catch (Exception e) {
                 LOGGER.error("selectCourse", e);
                 t.setRollbackOnly();
@@ -178,7 +194,7 @@ public class StudentServiceImpl implements StudentService {
         List<Select> selectList = selectMapper.selectByCondition(selectCondition);
         Assert.notEmpty(selectList, "退选失败, 未选择该课程");
 
-        transactionTemplate.execute((t) -> {
+        return transactionTemplate.execute((t) -> {
             try {
                 PoorLevelEnum poorLevel = PoorLevelEnum.valueOf(student.getPoorLevel());
                 Course course = courseMapper.selectByPrimaryKeyForUpdate(courseId);
@@ -196,7 +212,6 @@ public class StudentServiceImpl implements StudentService {
                 return Result.err("退选失败, 请稍候", null);
             }
         });
-        return Result.err("退选失败", null);
     }
 
     @Override

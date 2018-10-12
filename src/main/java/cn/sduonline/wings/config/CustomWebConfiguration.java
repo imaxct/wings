@@ -32,7 +32,7 @@ public class CustomWebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(studentInfoInterceptor).addPathPatterns("/Student/**")
             .excludePathPatterns("/Student/fill");
         registry.addInterceptor(siteOpenInterceptor).addPathPatterns("/Student/**")
-            .excludePathPatterns("/Common/login");
+            .excludePathPatterns("/Common/announce");
     }
 
     @Bean
