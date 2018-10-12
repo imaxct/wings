@@ -80,7 +80,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result importStudent(List<Student> students) {
-        int courseNum = courseMapper.deleteAll();
         int studentNum = studentMapper.deleteAll();
         int selectNum = selectMapper.deleteAll();
         int total = 0;
@@ -92,8 +91,8 @@ public class AdminServiceImpl implements AdminService {
             end = end > students.size() ? students.size() : end;
             total += studentMapper.insertBatch(students.subList(start, end));
         }
-        return Result.ok(String.format("导入:%d/%d条, 删除课程数据%d条, 删除学生数据%d条 删除选课数据%d条", total, students.size(), courseNum,
-            studentNum, selectNum));
+        return Result
+            .ok(String.format("导入:%d/%d条, 删除学生数据%d条 删除选课数据%d条", total, students.size(), studentNum, selectNum));
     }
 
     @Override
