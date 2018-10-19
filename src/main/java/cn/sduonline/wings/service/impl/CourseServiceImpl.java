@@ -32,6 +32,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result<Course> updateCourse(Course course) {
+        Course dbCourse = courseMapper.selectByPrimaryKey(course.getId());
+        // 已经开始选课
+        if (!dbCourse.getAvailableNum().equals(dbCourse.getTotalNum())) {
+            if (course.getTotalNum() < dbCourse.getAvailableNum()) {
+                throw new IllegalArgumentException("总课余量不能小于剩余课余量");
+            }
+        }
+        course.setAvailableNum(course.getTotalNum() - dbCourse.getTotalNum() + dbCourse.getAvailableNum());
         int num = courseMapper.updateByPrimaryKeyWithBLOBs(course);
         if (num > 0) {
             return Result.ok(num);
