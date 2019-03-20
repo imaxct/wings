@@ -6,6 +6,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import cn.sduonline.wings.dao.mapper.BlacklistMapper;
 import cn.sduonline.wings.model.Student;
 import cn.sduonline.wings.service.StudentService;
 import cn.sduonline.wings.vo.Result;
@@ -18,10 +19,12 @@ import cn.sduonline.wings.vo.Result;
 @SuppressWarnings("unchecked")
 public class CommonStudentController {
     private final StudentService studentService;
+    private final BlacklistMapper blacklistMapper;
 
     @Autowired
-    public CommonStudentController(StudentService studentService) {
+    public CommonStudentController(StudentService studentService, BlacklistMapper blacklistMapper) {
         this.studentService = studentService;
+        this.blacklistMapper = blacklistMapper;
     }
 
     @GetMapping("/announce")
@@ -31,6 +34,9 @@ public class CommonStudentController {
 
     @PostMapping("/login")
     public Result<Student> login(@RequestParam String username, @RequestParam String password) {
+        if (blacklistMapper.existsByStuNo(username)) {
+            return Result.err("因之前课程中存在违纪现象(如旷课)，您已被禁止报名本期添翼工程系列课程", null);
+        }
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
         Subject currentUser = SecurityUtils.getSubject();

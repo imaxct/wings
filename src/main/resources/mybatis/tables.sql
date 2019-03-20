@@ -122,3 +122,18 @@ CREATE TABLE `wings_student` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- Dump completed on 2018-10-03 16:56:07
+
+--
+-- Table structure for table `wings_blacklist`
+--
+
+DROP TABLE IF EXISTS `wings_blacklist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wings_blacklist` (
+  `id` bigint(19) unsigned NOT NULL,
+  `student_no` varchar(20) NOT NULL COMMENT '学号',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `wings_blacklist_student_no_uindex` (`student_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;

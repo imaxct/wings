@@ -71,5 +71,12 @@
                enableUpdateByExample="false"
                selectByExampleQueryId="false"/>
 
+        <table tableName="wings_blacklist"
+               domainObjectName="Blacklist"
+               enableCountByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableUpdateByExample="false"
+               selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>
