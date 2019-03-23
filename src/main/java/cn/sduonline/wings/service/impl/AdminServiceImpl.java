@@ -87,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
         int start, end;
         for (int i = 0; i <= cnt; ++i) {
             start = i * 50;
-            end = start + 49;
+            end = start + 50;
             end = end > students.size() ? students.size() : end;
             total += studentMapper.insertBatch(students.subList(start, end));
         }
