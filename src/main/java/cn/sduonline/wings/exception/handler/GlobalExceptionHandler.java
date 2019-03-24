@@ -28,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AuthorizationException.class, AuthenticationException.class})
     public ResponseEntity<ErrorDetail> handleAuthorizationException(Exception exception) {
-        ErrorDetail detail = new ErrorDetail(false, "登录已过期或未登录", null);
+        ErrorDetail detail = new ErrorDetail(false, "密码错误、登录已过期或未登录", null);
         LOGGER.info("handleAuthorizationException", exception);
         return new ResponseEntity<>(detail, HttpStatus.UNAUTHORIZED);
     }

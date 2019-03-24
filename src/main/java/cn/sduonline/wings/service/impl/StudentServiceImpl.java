@@ -133,7 +133,7 @@ public class StudentServiceImpl implements StudentService {
                     return Result.err("课余量为0, 不能选择", null);
                 }
 
-                if (course.getDeadline().before(new Date(System.currentTimeMillis()))) {
+                if (course.getDeadline() != null && course.getDeadline().before(new Date(System.currentTimeMillis()))) {
                     return Result.err("该课程报名已经截止", null);
                 }
 
