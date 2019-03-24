@@ -46,4 +46,6 @@ public interface BlacklistMapper {
     int updateByPrimaryKey(Blacklist record);
 
     boolean existsByStuNo(String studentNo);
+
+    int deleteByStudentNo(String studentNo);
 }
