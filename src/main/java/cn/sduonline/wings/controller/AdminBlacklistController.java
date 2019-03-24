@@ -1,11 +1,13 @@
 package cn.sduonline.wings.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.sduonline.wings.constant.RoleName;
 import cn.sduonline.wings.dao.mapper.BlacklistMapper;
 import cn.sduonline.wings.model.Blacklist;
 import cn.sduonline.wings.vo.Result;
@@ -15,6 +17,7 @@ import cn.sduonline.wings.vo.Result;
  */
 @RestController
 @RequestMapping("/Admin")
+@RequiresRoles(RoleName.ROLE_ADMIN)
 public class AdminBlacklistController {
     private final BlacklistMapper blacklistMapper;
 
