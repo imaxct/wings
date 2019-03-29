@@ -150,6 +150,10 @@ public class StudentServiceImpl implements StudentService {
                     } else {
                         course.setNotPoorNum(course.getNotPoorNum() - 1);
                     }
+                } else {
+                    if (course.getAvailableNum() - course.getNotPoorNum() <= 0) {
+                        return Result.err("名额已满", null);
+                    }
                 }
 
                 course.setAvailableNum(course.getAvailableNum() - 1);
