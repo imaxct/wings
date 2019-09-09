@@ -1,6 +1,7 @@
 package cn.sduonline.wings.util;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.jsoup.Connection;
@@ -19,18 +20,24 @@ import net.sf.json.JSONObject;
  */
 public class AcademyUtil {
 
-    private static final String URL_LOGIN = "http://bkjws.sdu.edu.cn/b/ajaxLogin";
+    // 教务登录入口关闭
+    // 换用新的登录验证方式
+//    private static final String URL_LOGIN = "http://bkjws.sdu.edu.cn/b/ajaxLogin";
+    private static final String URL_LOGIN = "http://202.194.15.137:8082/pvd/auth/login/edu";
     private static final String URL_INFO = "http://bkjws.sdu.edu.cn/b/grxx/xs/xjxx/detail";
-    private static final String PARAM_NAME = "j_username";
-    private static final String PARAM_PASS = "j_password";
+//    private static final String PARAM_NAME = "j_username";
+//    private static final String PARAM_PASS = "j_password";
+    private static final String PARAM_NAME = "u";
+    private static final String PARAM_PASS = "p";
     private static final Logger LOG = LoggerFactory.getLogger(AcademyUtil.class);
     private ThreadLocal<Map<String, String>> cookies = new ThreadLocal<>();
 
     private void login(String username, String password) {
         Connection.Response response;
         try {
-            response = Jsoup.connect(URL_LOGIN).data(PARAM_NAME, username)
-                .data(PARAM_PASS, DigestUtils.md5DigestAsHex(password.getBytes())).method(Connection.Method.POST)
+            response = Jsoup.connect(URL_LOGIN).data(PARAM_NAME, username).data(PARAM_PASS, password)
+//                .data(PARAM_PASS, DigestUtils.md5DigestAsHex(password.getBytes()))
+                .method(Connection.Method.POST)
                 .ignoreHttpErrors(true).ignoreContentType(true).timeout(0).execute();
         } catch (IOException e) {
             LOG.error("crawler", e);
@@ -38,6 +45,14 @@ public class AcademyUtil {
         }
         Assert.notNull(response, "访问教务失败");
         if (response.statusCode() == 200) {
+            if (response.body().contains("JSESSIONID")) {
+                Map<String, String> cookie = new HashMap<>();
+
+                String respStr = response.body().replace("\n", "");
+                cookie.put("JSESSIONID", respStr.substring(respStr.indexOf("=") + 1));
+                cookies.set(cookie);
+                return;
+            }
             if (response.body().contains("success")) {
                 cookies.set(response.cookies());
                 return;

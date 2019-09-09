@@ -147,17 +147,22 @@ public class StudentServiceImpl implements StudentService {
                 if (poorLevel == PoorLevelEnum.NOT_POOR) {
                     if (course.getNotPoorNum() <= 0) {
                         return Result.err("非困难名额已满", null);
+                        // 此处非困难生无法占用困难生名额
                     } else {
                         course.setNotPoorNum(course.getNotPoorNum() - 1);
                     }
                 } else {
                     if (course.getAvailableNum() - course.getNotPoorNum() <= 0) {
                         return Result.err("名额已满", null);
+                        // 此处困难生无法占用非困难生名额
                     }
                 }
 
+                // course.getAvailableNum() > course.getNotPoorNum()
                 course.setAvailableNum(course.getAvailableNum() - 1);
+                // course.getAvailableNum() >= course.getNotPoorNum()
 
+                // Absolutely false!!!!!!!!!!!
                 if (course.getAvailableNum() < course.getNotPoorNum()) {
                     course.setNotPoorNum(course.getAvailableNum());
                 }
