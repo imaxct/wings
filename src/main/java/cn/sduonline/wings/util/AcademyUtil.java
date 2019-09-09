@@ -23,7 +23,7 @@ public class AcademyUtil {
     // 教务登录入口关闭
     // 换用新的登录验证方式
 //    private static final String URL_LOGIN = "http://bkjws.sdu.edu.cn/b/ajaxLogin";
-    private static final String URL_LOGIN = "http://202.194.15.137:8082/pvd/auth/login/edu";
+    private static final String URL_LOGIN = "http://202.194.15.137:8082/api/auth/login/edu";
     private static final String URL_INFO = "http://bkjws.sdu.edu.cn/b/grxx/xs/xjxx/detail";
 //    private static final String PARAM_NAME = "j_username";
 //    private static final String PARAM_PASS = "j_password";
