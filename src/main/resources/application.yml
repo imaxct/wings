@@ -4,6 +4,8 @@ mybatis:
   type-aliases-package: cn.sduonline.wings.model
 
 spring:
+  jmx:
+    enabled: false
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: wings
@@ -15,3 +17,5 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
   offset-as-page-num: true
+server:
+  port: 8380

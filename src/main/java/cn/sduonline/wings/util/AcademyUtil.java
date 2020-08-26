@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
@@ -13,7 +15,6 @@ import org.springframework.util.DigestUtils;
 
 import cn.sduonline.wings.model.PoorLevelEnum;
 import cn.sduonline.wings.model.Student;
-import net.sf.json.JSONObject;
 
 /**
  * Created by imaxct on 18-10-1.
@@ -23,7 +24,8 @@ public class AcademyUtil {
     // 教务登录入口关闭
     // 换用新的登录验证方式
 //    private static final String URL_LOGIN = "http://bkjws.sdu.edu.cn/b/ajaxLogin";
-    private static final String URL_LOGIN = "http://202.194.15.137:8082/api/auth/login/edu";
+    private static final String URL_LOGIN = "http://202.194.15.137:8082/api/auth/login/system";
+    private static final String URL_EDU_LOGIN = "http://202.194.15.137:8082/api/auth/login/edu";
     private static final String URL_INFO = "http://bkjws.sdu.edu.cn/b/grxx/xs/xjxx/detail";
 //    private static final String PARAM_NAME = "j_username";
 //    private static final String PARAM_PASS = "j_password";
@@ -41,24 +43,44 @@ public class AcademyUtil {
                 .ignoreHttpErrors(true).ignoreContentType(true).timeout(0).execute();
         } catch (IOException e) {
             LOG.error("crawler", e);
-            throw new IllegalArgumentException("验证教务失败");
+            throw new IllegalArgumentException("统一身份认证失败");
         }
-        Assert.notNull(response, "访问教务失败");
+        Assert.notNull(response, "访问统一身份认证失败");
         if (response.statusCode() == 200) {
-            if (response.body().contains("JSESSIONID")) {
-                Map<String, String> cookie = new HashMap<>();
+            String respBody = response.body();
+//            if (respBody.contains("JSESSIONID")) {
+//                Map<String, String> cookie = new HashMap<>();
+//
+//                String respStr = response.body().replace("\n", "");
+//                cookie.put("JSESSIONID", respStr.substring(respStr.indexOf("=") + 1));
+//                cookies.set(cookie);
+//                return;
+//            }
+//            if (respBody.contains("success")) {
+//                cookies.set(response.cookies());
+//                return;
+//            }
+            JSONObject jsonObject = JSON.parseObject(respBody);
+            if (jsonObject.getInteger("code") == 0) {
+                try {
+                    Connection.Response eduResp = Jsoup.connect(URL_EDU_LOGIN).data(PARAM_NAME, username)
+                            .data(PARAM_PASS, password).method(Connection.Method.POST)
+                            .ignoreContentType(true).ignoreHttpErrors(true).timeout(0).execute();
 
-                String respStr = response.body().replace("\n", "");
-                cookie.put("JSESSIONID", respStr.substring(respStr.indexOf("=") + 1));
-                cookies.set(cookie);
-                return;
-            }
-            if (response.body().contains("success")) {
-                cookies.set(response.cookies());
-                return;
+                    Map<String, String> cookie = new HashMap<>();
+                    String respStr = eduResp.body().replace("\n", "");
+                    cookie.put("JSESSIONID", respStr.substring(respStr.indexOf("=") + 1));
+                    cookies.set(cookie);
+                    return;
+                } catch (IOException e) {
+                    LOG.error("crawler", e);
+                    throw new IllegalArgumentException("统一身份认证失败");
+                }
+            } else {
+                throw new IllegalArgumentException(jsonObject.getString("message"));
             }
         }
-        throw new IllegalArgumentException("验证教务失败");
+        throw new IllegalArgumentException("统一身份认证失败");
     }
 
     public Student getStudent(String username, String password) {
@@ -77,7 +99,7 @@ public class AcademyUtil {
 
         if (response.statusCode() == 200) {
 
-            JSONObject object = JSONObject.fromObject(response.body());
+            net.sf.json.JSONObject object = net.sf.json.JSONObject.fromObject(response.body());
             if ("success".equals(object.getString("result"))) {
                 object = object.getJSONObject("object");
                 Student student = new Student();
